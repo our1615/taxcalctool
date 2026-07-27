@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Employment Tax Calculator 2026 - Tax Calc Tool</title>
+<meta name="description" content="Calculate your 2026 self-employment tax (Schedule C and SE). Includes Social Security, Medicare, and deduction calculations for freelancers and small business owners.">
+<link rel="canonical" href="https://taxcalctool.org/tools/self-employment-tax.html">
+<meta property="og:title" content="Self-Employment Tax Calculator 2026 - Tax Calc Tool">
+<meta property="og:description" content="Calculate your 2026 self-employment tax (Schedule C and SE). Includes Social Security, Medicare, and deduction calculations for freelancers and small business owners.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/tools/self-employment-tax.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Self-Employment Tax Calculator 2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Calculate Schedule C and self-employment tax for freelancers and small business owners"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://taxcalctool.org/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Self-Employment Tax Calculator",
+      "item": "https://taxcalctool.org/tools/self-employment-tax.html"
+    }
+  ]
+}
+</script>
+<style>
+.tct-dashboard-layout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.tct-dash-card { background: var(--tct-card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--tct-shadow); }
+.tct-dash-metric { font-size: 2rem; font-weight: 700; color: var(--tct-primary); font-family: 'Playfair Display', serif; }
+.tct-dash-label { color: var(--tct-text-light); font-size: 0.9rem; margin-top: 0.25rem; }
+.tct-progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-top: 0.5rem; overflow: hidden; }
+.tct-progress-fill { height: 100%; background: linear-gradient(90deg, var(--tct-accent), var(--tct-primary-light)); border-radius: 4px; transition: width 0.5s; }
+#tctChart { width: 100%; height: 250px; }
+.tct-history-item { padding: 0.75rem; border-bottom: 1px solid var(--tct-border); font-size: 0.9rem; cursor: pointer; }
+.tct-history-item:hover { background: #f8f8f8; }
+@media (max-width: 768px) { .tct-dashboard-layout { grid-template-columns: 1fr; } }
+</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Self-Employment Tax Calculator - Tax Calc Tool">
+<meta name="twitter:description" content="Calculate your 2026 self-employment tax (Schedule C and SE). Includes Social Security, Medicare, and deduction calculations for freelancers and small business owners.">
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="../index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav><ul class="tct-nav" id="mainNav">
+      <li><a href="./index.html">Tools</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb"><a href="../index.html">Home</a> / <a href="./index.html">Tools</a> / Self-Employment Tax Calculator</nav>
+
+  <div id="tool_top" data-ad-slot="tool_top" class="tct-ad-slot"></div>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;">Self-Employment Tax Calculator</h1>
+    <p style="color:var(--tct-text-light);margin-bottom:2rem;">Calculate Schedule C net income and self-employment tax (15.3%) for 2026. Includes deductible portion.</p>
+
+    <div class="tct-dash-card" style="margin-bottom:1.5rem;">
+      <h3 style="margin-bottom:1.5rem;">Business Information</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="tct-form-group">
+          <label class="tct-label">Total Business Income ($)</label>
+          <input type="number" id="bizIncome" class="tct-input" placeholder="e.g. 85000" min="0">
+        </div>
+        <div class="tct-form-group">
+          <label class="tct-label">Business Expenses ($)</label>
+          <input type="number" id="bizExpenses" class="tct-input" placeholder="e.g. 25000" min="0" value="0">
+        </div>
+        <div class="tct-form-group">
+          <label class="tct-label">Other Self-Employment Income ($)</label>
+          <input type="number" id="otherSE" class="tct-input" placeholder="e.g. 15000" min="0" value="0">
+        </div>
+        <div class="tct-form-group">
+          <label class="tct-label">W-2 Wages (if any) ($)</label>
+          <input type="number" id="w2Wages" class="tct-input" placeholder="e.g. 50000" min="0" value="0">
+        </div>
+      </div>
+      <button class="tct-btn" onclick="tctCalculateSETax()" style="margin-top:1rem;width:100%;">Calculate SE Tax</button>
+    </div>
+
+    <div id="resultArea" style="display:none;">
+      <div class="tct-dashboard-layout">
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="netIncome">$0</div>
+          <div class="tct-dash-label">Net Business Income</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="netBar" style="width:0%"></div></div>
+        </div>
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="seTaxable">$0</div>
+          <div class="tct-dash-label">SE Taxable Income (92.35%)</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="seBar" style="width:0%"></div></div>
+        </div>
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="socSecTax">$0</div>
+          <div class="tct-dash-label">Social Security Tax (12.4%)</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="ssBar" style="width:0%"></div></div>
+        </div>
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="medicareTax">$0</div>
+          <div class="tct-dash-label">Medicare Tax (2.9%)</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="mcBar" style="width:0%"></div></div>
+        </div>
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="totalSETax">$0</div>
+          <div class="tct-dash-label">Total SE Tax (15.3%)</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="totalBar" style="width:0%;background:var(--tct-accent)"></div></div>
+        </div>
+        <div class="tct-dash-card">
+          <div class="tct-dash-metric" id="deduction">$0</div>
+          <div class="tct-dash-label">Deductible Portion (50%)</div>
+          <div class="tct-progress-bar"><div class="tct-progress-fill" id="deductBar" style="width:0%;background:var(--tct-success)"></div></div>
+        </div>
+      </div>
+
+      <div class="tct-dash-card" style="margin-top:1.5rem;">
+        <h3 style="margin-bottom:1rem;">Tax Breakdown Visualization</h3>
+        <canvas id="tctChart"></canvas>
+      </div>
+
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+        <button class="tct-btn" onclick="tctSaveResult()">Save Result</button>
+        <button class="tct-btn tct-btn-secondary" onclick="tctExportResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Export CSV</button>
+        <button class="tct-btn tct-btn-secondary" onclick="tctShareResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Share Link</button>
+        <button class="tct-btn tct-btn-secondary" onclick="tctCompareMode()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Compare</button>
+      </div>
+    </div>
+
+    <div class="tct-dash-card" style="margin-top:2rem;">
+      <h3 style="margin-bottom:1rem;">How It Works</h3>
+      <div class="tct-accordion-item active">
+        <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">1. What This Calculator Does</div>
+        <div class="tct-accordion-body" style="display:block;">
+          <p>Calculates your 2026 self-employment tax based on Schedule C net income. Applies the 92.35% adjustment factor, then computes Social Security (12.4% up to $176,100 wage base) and Medicare (2.9%, no cap). Also calculates your deductible portion.</p>
+        </div>
+      </div>
+      <div class="tct-accordion-item">
+        <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">2. When to Use It</div>
+        <div class="tct-accordion-body">
+          <p>Use this when you're self-employed (1099, freelancer, small business owner) and need to estimate your SE tax for quarterly payments or year-end planning. Also useful when deciding between S-Corp and sole proprietorship.</p>
+        </div>
+      </div>
+      <div class="tct-accordion-item">
+        <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">3. Calculation Method</div>
+        <div class="tct-accordion-body">
+          <p>Net Income = Business Income - Expenses. SE Taxable = Net Income × 92.35%. Social Security = min(SE Taxable, $176,100 - W-2 wages) × 12.4%. Medicare = SE Taxable × 2.9%. Total = SS + Medicare. Deductible = Total × 50%.</p>
+        </div>
+      </div>
+      <div class="tct-accordion-item">
+        <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">4. Understanding Results</div>
+        <div class="tct-accordion-body">
+          <p>The 15.3% rate surprises many first-time freelancers. The deductible portion reduces your AGI, which slightly lowers your income tax. If your W-2 wages already hit the $176,100 cap, you only pay Medicare on self-employment income.</p>
+        </div>
+      </div>
+      <div class="tct-accordion-item">
+        <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">5. Disclaimer</div>
+        <div class="tct-accordion-body">
+          <p>This calculator does not include the 0.9% Additional Medicare Tax for high earners ($200k single / $250k married). For complex business structures (S-Corp, Partnership), consult a CPA. This is an estimate for planning only.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tool_middle" data-ad-slot="tool_middle" class="tct-ad-slot"></div>
+
+    <div class="tct-dash-card" style="margin-top:2rem;">
+      <h3 style="margin-bottom:1rem;">Saved Calculations</h3>
+      <div id="historyList"><p style="color:var(--tct-text-light);">No saved calculations yet.</p></div>
+      <button class="tct-btn" onclick="tctClearHistory()" style="margin-top:1rem;">Clear History</button>
+    </div>
+
+    <div class="tct-dash-card" style="margin-top:2rem;">
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"></div>
+    </div>
+
+    <div class="tct-dash-card" style="margin-top:2rem;">
+      <h3 style="margin-bottom:1rem;">Other Tax Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </section>
+
+  <div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+</div>
+
+
+<div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+
+<div style="margin:2rem 0;">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+<a href="../blog/index.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;"><div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">ARTICLE</div><strong>Related articles loading...</strong></a>
+</div></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:1rem;">Recommended Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </div>
+</div>
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div><h4>Tools</h4><a href="./federal-tax-estimator.html">Federal Tax Estimator</a><a href="./self-employment-tax.html">Self-Employment Tax</a><a href="./refund-predictor.html">Refund Predictor</a><a href="./deduction-comparison.html">Deduction Comparison</a><a href="./quarterly-tax.html">Quarterly Tax</a><a href="./state-tax-comparison.html">State Tax Comparison</a></div>
+      <div><h4>Blog & Resources</h4><a href="../blog/index.html">All Articles</a><a href="../faq.html">FAQ</a><a href="../sitemap.html">Sitemap</a></div>
+      <div><h4>Legal</h4><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="../disclaimer.html">Disclaimer</a><a href="../disclosure.html">Ad Disclosure</a></div>
+      <div><h4>About</h4><a href="../about.html">About Us</a><a href="../contact.html">Contact</a><p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p></div>
+    </div>
+    <div class="tct-footer-bottom"><p>Tax Calc Tool. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<div class="tct-sticky-bar">Your data stays on your device. No information is stored on our servers.</div>
+
+<script src="../ads-loader.js"></script>
+
+<script>
+const TCT_SE_RATE = 0.9235; // 92.35% adjustment
+const TCT_SS_RATE = 0.124;  // 12.4% Social Security
+const TCT_MC_RATE = 0.029;  // 2.9% Medicare
+const TCT_SS_WAGE_BASE = 176100; // 2026 wage base
+
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+function tctCalculateSETax() {
+  var bizIncome = parseFloat(document.getElementById('bizIncome').value) || 0;
+  var bizExpenses = parseFloat(document.getElementById('bizExpenses').value) || 0;
+  var otherSE = parseFloat(document.getElementById('otherSE').value) || 0;
+  var w2Wages = parseFloat(document.getElementById('w2Wages').value) || 0;
+
+  var netIncome = bizIncome - bizExpenses + otherSE;
+  var seTaxable = netIncome * TCT_SE_RATE;
+  var ssWages = Math.max(0, Math.min(seTaxable, TCT_SS_WAGE_BASE - w2Wages));
+  var ssTax = ssWages * TCT_SS_RATE;
+  var mcTax = seTaxable * TCT_MC_RATE;
+  var totalTax = ssTax + mcTax;
+  var deduction = totalTax * 0.5;
+
+  document.getElementById('netIncome').textContent = '$' + netIncome.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('seTaxable').textContent = '$' + seTaxable.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('socSecTax').textContent = '$' + ssTax.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('medicareTax').textContent = '$' + mcTax.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('totalSETax').textContent = '$' + totalTax.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('deduction').textContent = '$' + deduction.toLocaleString('en-US', {maximumFractionDigits: 0});
+
+  // Update progress bars
+  var maxVal = Math.max(netIncome, seTaxable, totalTax, 1);
+  document.getElementById('netBar').style.width = (netIncome / maxVal * 100) + '%';
+  document.getElementById('seBar').style.width = (seTaxable / maxVal * 100) + '%';
+  document.getElementById('ssBar').style.width = (ssTax / maxVal * 100) + '%';
+  document.getElementById('mcBar').style.width = (mcTax / maxVal * 100) + '%';
+  document.getElementById('totalBar').style.width = (totalTax / maxVal * 100) + '%';
+  document.getElementById('deductBar').style.width = (deduction / maxVal * 100) + '%';
+
+  document.getElementById('resultArea').style.display = 'block';
+
+  tctDrawSEChart(netIncome, seTaxable, ssTax, mcTax, totalTax, deduction);
+  tctSaveToHistory({bizIncome: bizIncome, bizExpenses: bizExpenses, otherSE: otherSE, w2Wages: w2Wages, netIncome: netIncome, totalTax: totalTax, deduction: deduction, date: new Date().toLocaleDateString()});
+  tctSaveInputState();
+}
+
+function tctDrawSEChart(netIncome, seTaxable, ssTax, mcTax, totalTax, deduction) {
+  var canvas = document.getElementById('tctChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = 600 * dpr; canvas.height = 250 * dpr;
+  ctx.scale(dpr, dpr);
+  var w = 600, h = 250, pad = {top: 30, bottom: 40, left: 80, right: 30};
+  ctx.clearRect(0, 0, w, h);
+
+  var data = [
+    {label: 'Net Income', value: netIncome, color: '#4a90a4'},
+    {label: 'SE Taxable', value: seTaxable, color: '#5ba3b8'},
+    {label: 'SS Tax', value: ssTax, color: '#e8913a'},
+    {label: 'Medicare', value: mcTax, color: '#c45b4a'},
+    {label: 'Total SE Tax', value: totalTax, color: '#8b5a7c'},
+    {label: 'Deductible', value: deduction, color: '#2d4a3e'}
+  ];
+
+  var maxVal = Math.max.apply(null, data.map(function(d){ return d.value; })) * 1.1;
+  var barH = 24, gap = 8;
+
+  data.forEach(function(d, i) {
+    var y = pad.top + i * (barH + gap);
+    var barW = (d.value / maxVal) * (w - pad.left - pad.right);
+    ctx.fillStyle = d.color;
+    ctx.beginPath(); ctx.roundRect(pad.left, y, barW, barH, 4); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.font = '12px Inter'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 10, y + 16);
+    ctx.fillStyle = '#5c5c5c'; ctx.font = '11px Inter'; ctx.textAlign = 'left';
+    ctx.fillText('$' + d.value.toLocaleString(), pad.left + barW + 8, y + 16);
+  });
+
+  ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+  ctx.fillText('Self-Employment Tax Breakdown', w/2, 18);
+}
+
+function tctSaveResult() {
+  var net = document.getElementById('netIncome').textContent;
+  var total = document.getElementById('totalSETax').textContent;
+  var deduct = document.getElementById('deduction').textContent;
+  var text = 'Self-Employment Tax Estimate\nNet Income: ' + net + '\nTotal SE Tax: ' + total + '\nDeductible Portion: ' + deduct + '\nGenerated by taxcalctool.org';
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'se-tax-estimate.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctExportResult() {
+  var history = JSON.parse(localStorage.getItem('tctSEHistory') || '[]');
+  if (history.length === 0) { alert('No data to export'); return; }
+  var csv = 'Date,Business Income,Expenses,Other SE,W-2 Wages,Net Income,Total SE Tax,Deductible\n';
+  history.forEach(function(h) {
+    csv += [h.date, h.bizIncome, h.bizExpenses, h.otherSE, h.w2Wages, h.netIncome, h.totalTax, h.deduction].join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'se-tax-history.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctShareResult() {
+  var total = document.getElementById('totalSETax').textContent;
+  var net = document.getElementById('netIncome').textContent;
+  var text = 'My 2026 self-employment tax: ' + total + ' on ' + net + ' net income. Calculate yours at taxcalctool.org';
+  if (navigator.share) {
+    navigator.share({title: 'SE Tax Estimate', text: text});
+  } else {
+    navigator.clipboard.writeText(text).then(function() { alert('Copied to clipboard!'); });
+  }
+}
+
+function tctCompareMode() {
+  var history = JSON.parse(localStorage.getItem('tctSEHistory') || '[]');
+  if (history.length < 2) { alert('Need at least 2 saved calculations. Run the calculator twice with different inputs.'); return; }
+  var h1 = history[0], h2 = history[1];
+  alert('Comparison:\nScenario 1: Income $' + h1.bizIncome.toLocaleString() + ' → SE Tax: ' + h1.totalTax.toLocaleString() + '\nScenario 2: Income $' + h2.bizIncome.toLocaleString() + ' → SE Tax: ' + h2.totalTax.toLocaleString());
+}
+
+function tctSaveToHistory(record) {
+  var history = JSON.parse(localStorage.getItem('tctSEHistory') || '[]');
+  history.unshift(record);
+  if (history.length > 10) history.pop();
+  localStorage.setItem('tctSEHistory', JSON.stringify(history));
+  tctRenderHistory();
+}
+
+function tctRenderHistory() {
+  var history = JSON.parse(localStorage.getItem('tctSEHistory') || '[]');
+  var el = document.getElementById('historyList');
+  if (history.length === 0) {
+    el.innerHTML = '<p style="color:var(--tct-text-light);">No saved calculations yet.</p>';
+    return;
+  }
+  var html = '';
+  history.forEach(function(h, i) {
+    html += '<div class="tct-history-item" onclick="tctLoadHistory(' + i + ')">';
+    html += '<strong>$' + h.bizIncome.toLocaleString() + '</strong> income — SE Tax: ' + h.totalTax.toLocaleString() + ' — ' + h.date + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function tctLoadHistory(index) {
+  var history = JSON.parse(localStorage.getItem('tctSEHistory') || '[]');
+  var h = history[index];
+  if (!h) return;
+  document.getElementById('bizIncome').value = h.bizIncome;
+  document.getElementById('bizExpenses').value = h.bizExpenses;
+  document.getElementById('otherSE').value = h.otherSE;
+  document.getElementById('w2Wages').value = h.w2Wages;
+  tctCalculateSETax();
+}
+
+function tctClearHistory() {
+  localStorage.removeItem('tctSEHistory');
+  tctRenderHistory();
+}
+
+function tctSaveInputState() {
+  var state = {
+    bizIncome: document.getElementById('bizIncome').value,
+    bizExpenses: document.getElementById('bizExpenses').value,
+    otherSE: document.getElementById('otherSE').value,
+    w2Wages: document.getElementById('w2Wages').value
+  };
+  localStorage.setItem('tctSEInput', JSON.stringify(state));
+}
+
+function tctLoadInputState() {
+  var state = JSON.parse(localStorage.getItem('tctSEInput') || '{}');
+  if (state.bizIncome) document.getElementById('bizIncome').value = state.bizIncome;
+  if (state.bizExpenses) document.getElementById('bizExpenses').value = state.bizExpenses;
+  if (state.otherSE) document.getElementById('otherSE').value = state.otherSE;
+  if (state.w2Wages) document.getElementById('w2Wages').value = state.w2Wages;
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  tctLoadInputState();
+  tctRenderHistory();
+});
+</script>
+
+
+<script>
+// Load related articles
+fetch('../articles.json')
+  .then(r => r.json())
+  .then(articles => {
+    const currentCategory = 'SELF-EMPLOYMENT';
+    let related = articles.filter(a => a.category === currentCategory);
+    if (related.length < 3) {
+      const tagMatches = articles.filter(a => !related.includes(a) && a.tags && a.tags.some(t => ['self-employment', 'tax', 'federal'].includes(t)));
+      related = related.concat(tagMatches);
+    }
+    while (related.length < 3) {
+      const random = articles[Math.floor(Math.random() * articles.length)];
+      if (!related.includes(random)) related.push(random);
+    }
+    const container = document.getElementById('related-articles');
+    if (container) {
+      container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">' +
+        related.slice(0, 3).map(a =>
+          '<a href="../blog/' + a.slug + '.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;">' +
+          '<div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">' + (a.category || 'ARTICLE') + '</div>' +
+          '<strong>' + a.title + '</strong>' +
+          '<p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.5rem;">' + (a.excerpt ? a.excerpt.substring(0,80) : '') + '...</p></a>'
+        ).join('') +
+        '</div>';
+    }
+  })
+  .catch(() => {
+    const container = document.getElementById('related-articles');
+    if (container) container.innerHTML = '<p style="color:var(--tct-text-light);">Related articles loading...</p>';
+  });
+
+// Tool recommendations
+var toolCategory = 'SELF-EMPLOYMENT';
+var toolMap = {
+  'DEDUCTIONS': [
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'See how deductions affect your total tax.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Estimate your refund after deductions.']
+  ],
+  'FEDERAL': [
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Estimate your federal tax with 2026 OBBBA brackets.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Will you owe or get a refund? Find out before filing.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.']
+  ],
+  'SELF-EMPLOYMENT': [
+    ['../tools/self-employment-tax.html', '&#128188;', 'Self-Employment Tax Calculator', 'See exactly how much SE tax you will owe.'],
+    ['../tools/quarterly-tax.html', '&#128197;', 'Quarterly Tax Estimator', 'Calculate your estimated quarterly payments for 2026.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Full picture: income + SE tax combined.']
+  ],
+  'STATE-TAX': [
+    ['../tools/state-tax-comparison.html', '&#127758;', 'State Tax Comparison', 'Compare state income tax across all 50 states.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Federal + state combined tax picture.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'How state tax affects your deduction strategy.']
+  ]
+};
+var tools = toolMap[toolCategory] || toolMap['FEDERAL'];
+var toolHtml = '';
+for (var i = 0; i < tools.length; i++) {
+  var t = tools[i];
+  toolHtml += '<a href="' + t[0] + '" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);margin-bottom:0.75rem;">' +
+    '<div style="font-size:1.5rem;margin-bottom:0.5rem;">' + t[1] + '</div><strong>' + t[2] + '</strong><p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.25rem;">' + t[3] + '</p></a>';
+}
+var toolContainer = document.getElementById('other-tools');
+if (toolContainer) toolContainer.innerHTML = toolHtml;
+</script>
+tctLoadAds();
+</body>
+</html>
