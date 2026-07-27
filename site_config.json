@@ -1,0 +1,15 @@
+{
+  "site_name": "Tax Calc Tool",
+  "domain": "taxcalctool.org",
+  "prefix": "tct",
+  "author": "Michael Harrison",
+  "language": "en",
+  "timezone": "America/Chicago",
+  "analytics": false,
+  "ads_enabled": true,
+  "social": {
+    "twitter": "",
+    "facebook": "",
+    "linkedin": ""
+  }
+}
