@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quarterly Tax Payment Calculator 2026 - Tax Calc Tool</title>
+<meta name="description" content="Calculate your 2026 quarterly estimated tax payments (Q1-Q4) for self-employment income. Includes safe harbor rules and due dates.">
+<link rel="canonical" href="https://taxcalctool.org/tools/quarterly-tax.html">
+<meta property="og:title" content="Quarterly Tax Payment Calculator 2026 - Tax Calc Tool">
+<meta property="og:description" content="Calculate your 2026 quarterly estimated tax payments (Q1-Q4) for self-employment income. Includes safe harbor rules and due dates.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/tools/quarterly-tax.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Quarterly Tax Payment Calculator 2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Calculate Q1-Q4 estimated tax payments for self-employed taxpayers using safe harbor rules"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://taxcalctool.org/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Quarterly Tax Calculator",
+      "item": "https://taxcalctool.org/tools/quarterly-tax.html"
+    }
+  ]
+}
+</script>
+<style>
+.tct-timeline-container { max-width: 900px; margin: 0 auto; }
+.tct-timeline { position: relative; padding-left: 2.5rem; }
+.tct-timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, var(--tct-primary), var(--tct-accent)); border-radius: 2px; }
+.tct-timeline-item { position: relative; margin-bottom: 2.5rem; padding-left: 1.5rem; }
+.tct-timeline-item::before { content: ''; position: absolute; left: -2.65rem; top: 0.25rem; width: 16px; height: 16px; border-radius: 50%; background: var(--tct-accent); border: 4px solid var(--tct-primary); }
+.tct-timeline-item.past::before { background: var(--tct-success); }
+.tct-timeline-item.upcoming::before { background: var(--tct-warning); }
+.tct-quarter-card { background: var(--tct-card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--tct-shadow); }
+.tct-quarter-result { font-size: 2rem; font-weight: 700; color: var(--tct-primary); font-family: 'Playfair Display', serif; margin: 0.5rem 0; }
+.tct-quarter-date { color: var(--tct-accent); font-weight: 600; font-size: 0.95rem; }
+.tct-input-quarter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.tct-history-item { padding: 0.75rem; border-bottom: 1px solid var(--tct-border); font-size: 0.9rem; cursor: pointer; }
+.tct-history-item:hover { background: #f8f8f8; }
+#tctChart { width: 100%; height: 300px; margin-top: 1.5rem; }
+@media (max-width: 768px) { .tct-input-quarter { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .tct-input-quarter { grid-template-columns: 1fr; } }
+</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quarterly Tax Calculator - Tax Calc Tool">
+<meta name="twitter:description" content="Calculate your 2026 quarterly estimated tax payments (Q1-Q4) for self-employment income. Includes safe harbor rules and due dates.">
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="../index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav><ul class="tct-nav" id="mainNav">
+      <li><a href="./index.html">Tools</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb"><a href="../index.html">Home</a> / <a href="./index.html">Tools</a> / Quarterly Tax Calculator</nav>
+
+  <div id="tool_top" data-ad-slot="tool_top" class="tct-ad-slot"></div>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;text-align:center;">Quarterly Tax Payment Calculator</h1>
+    <p style="color:var(--tct-text-light);margin-bottom:2rem;text-align:center;">Calculate Q1-Q4 estimated tax payments for 2026. Includes safe harbor rules and IRS due dates.</p>
+
+    <div class="tct-timeline-container">
+      <div class="tct-quarter-card" style="margin-bottom:2rem;">
+        <h3 style="margin-bottom:1.5rem;">Your 2026 Income Estimate</h3>
+        <div class="tct-input-quarter">
+          <div class="tct-form-group">
+            <label class="tct-label">Q1 Income (Jan-Mar)</label>
+            <input type="number" id="q1Income" class="tct-input" placeholder="e.g. 15000" min="0" value="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Q2 Income (Apr-Jun)</label>
+            <input type="number" id="q2Income" class="tct-input" placeholder="e.g. 18000" min="0" value="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Q3 Income (Jul-Sep)</label>
+            <input type="number" id="q3Income" class="tct-input" placeholder="e.g. 20000" min="0" value="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Q4 Income (Oct-Dec)</label>
+            <input type="number" id="q4Income" class="tct-input" placeholder="e.g. 22000" min="0" value="0">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <div class="tct-form-group">
+            <label class="tct-label">Filing Status</label>
+            <select id="filingStatus" class="tct-select">
+              <option value="single">Single</option>
+              <option value="married">Married Filing Jointly</option>
+              <option value="head">Head of Household</option>
+            </select>
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">2025 Tax Liability (for safe harbor)</label>
+            <input type="number" id="priorTax" class="tct-input" placeholder="e.g. 12000" min="0" value="0">
+          </div>
+        </div>
+        <div style="margin-top:1rem;font-size:0.9rem;color:var(--tct-text-light);">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+            <input type="checkbox" id="useSafeHarbor" checked> Use safe harbor (pay 100% of prior year or 110% if AGI > $150k)
+          </label>
+        </div>
+        <button class="tct-btn" onclick="tctCalculateQuarterly()" style="width:100%;margin-top:1.5rem;padding:1rem;">Calculate Quarterly Payments</button>
+      </div>
+
+      <div id="resultArea" style="display:none;">
+        <div class="tct-timeline">
+          <div class="tct-timeline-item past">
+            <div class="tct-quarter-card">
+              <div class="tct-quarter-date">Q1 - April 15, 2026 (Due Date Passed)</div>
+              <h3 style="margin:0.5rem 0;">First Quarter Payment</h3>
+              <div class="tct-quarter-result" id="q1Payment">$0</div>
+              <p style="color:var(--tct-text-light);font-size:0.9rem;">Based on Q1 income × estimated tax rate</p>
+            </div>
+          </div>
+          <div class="tct-timeline-item upcoming">
+            <div class="tct-quarter-card">
+              <div class="tct-quarter-date">Q2 - June 15, 2026</div>
+              <h3 style="margin:0.5rem 0;">Second Quarter Payment</h3>
+              <div class="tct-quarter-result" id="q2Payment">$0</div>
+              <p style="color:var(--tct-text-light);font-size:0.9rem;">Based on Q2 income × estimated tax rate</p>
+            </div>
+          </div>
+          <div class="tct-timeline-item upcoming">
+            <div class="tct-quarter-card">
+              <div class="tct-quarter-date">Q3 - September 15, 2026</div>
+              <h3 style="margin:0.5rem 0;">Third Quarter Payment</h3>
+              <div class="tct-quarter-result" id="q3Payment">$0</div>
+              <p style="color:var(--tct-text-light);font-size:0.9rem;">Based on Q3 income × estimated tax rate</p>
+            </div>
+          </div>
+          <div class="tct-timeline-item upcoming">
+            <div class="tct-quarter-card">
+              <div class="tct-quarter-date">Q4 - January 15, 2027</div>
+              <h3 style="margin:0.5rem 0;">Fourth Quarter Payment</h3>
+              <div class="tct-quarter-result" id="q4Payment">$0</div>
+              <p style="color:var(--tct-text-light);font-size:0.9rem;">Based on Q4 income × estimated tax rate</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tct-quarter-card" style="margin-top:2rem;">
+          <h3 style="margin-bottom:1rem;">Annual Summary</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center;">
+            <div style="padding:1rem;background:#f8f8f8;border-radius:8px;">
+              <div style="font-size:1.75rem;font-weight:700;color:var(--tct-primary);" id="totalIncome">$0</div>
+              <div style="font-size:0.85rem;color:var(--tct-text-light);">Total Annual Income</div>
+            </div>
+            <div style="padding:1rem;background:#f8f8f8;border-radius:8px;">
+              <div style="font-size:1.75rem;font-weight:700;color:var(--tct-accent);" id="totalTax">$0</div>
+              <div style="font-size:0.85rem;color:var(--tct-text-light);">Total Estimated Tax</div>
+            </div>
+            <div style="padding:1rem;background:#f8f8f8;border-radius:8px;">
+              <div style="font-size:1.75rem;font-weight:700;color:var(--tct-success);" id="safeHarbor">$0</div>
+              <div style="font-size:0.85rem;color:var(--tct-text-light);">Safe Harbor Amount</div>
+            </div>
+          </div>
+          <div id="safeHarborMsg" style="margin-top:1rem;padding:1rem;border-radius:8px;text-align:center;font-weight:600;"></div>
+          <canvas id="tctChart"></canvas>
+        </div>
+
+        <div style="display:flex;gap:1rem;justify-content:center;margin:1.5rem 0;flex-wrap:wrap;">
+          <button class="tct-btn" onclick="tctSaveResult()">Save</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctExportResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Export</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctShareResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Share</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctAddToCalendar()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Add to Calendar</button>
+        </div>
+      </div>
+
+      <div class="tct-quarter-card" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">How It Works</h3>
+        <div class="tct-accordion-item active">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">1. What This Calculator Does</div>
+          <div class="tct-accordion-body" style="display:block;">
+            <p>Calculates your required quarterly estimated tax payments for 2026 based on your projected quarterly income. Applies a simplified effective tax rate (22% default) to each quarter's income, then compares against the IRS safe harbor rules to ensure you avoid penalties.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">2. When to Use It</div>
+          <div class="tct-accordion-body">
+            <p>Use at the start of each quarter to estimate your payment. Also use when income changes unexpectedly (new client, lost client, seasonal business). The IRS expects equal payments, but you can use the annualized income method if your income is uneven.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">3. Calculation Method</div>
+          <div class="tct-accordion-body">
+            <p>Quarterly Payment = Quarterly Income × Effective Tax Rate (default 22%, adjustable). Safe Harbor = 100% of prior year tax (110% if prior AGI > $150k). The calculator ensures each quarter meets the safe harbor minimum to avoid penalties. If quarterly method gives higher payments, it uses that instead.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">4. Understanding Results</div>
+          <div class="tct-accordion-body">
+            <p>Green safe harbor message means you're protected from penalties even if you underpay. Yellow means you're close to the threshold. Red means you may owe penalties if you don't increase payments. The timeline shows due dates - Q1 is past due if you're calculating mid-year.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">5. Disclaimer</div>
+          <div class="tct-accordion-body">
+            <p>This uses a simplified 22% effective rate. Your actual rate depends on total annual income, deductions, credits, and state taxes. For precise quarterly payments, use Form 1040-ES worksheets or consult a tax professional. Safe harbor rules are simplified here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool_middle" data-ad-slot="tool_middle" class="tct-ad-slot"></div>
+
+      <div class="tct-quarter-card" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Saved Calculations</h3>
+        <div id="historyList"><p style="color:var(--tct-text-light);">No saved calculations yet.</p></div>
+        <button class="tct-btn" onclick="tctClearHistory()" style="margin-top:1rem;">Clear History</button>
+      </div>
+
+      <div class="tct-quarter-card" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Related Articles</h3>
+        <div id="related-articles"></div>
+      </div>
+
+      <div class="tct-quarter-card" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Other Tax Tools</h3>
+        <div id="other-tools"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+</div>
+
+
+<div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+
+<div style="margin:2rem 0;">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+<a href="../blog/index.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;"><div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">ARTICLE</div><strong>Related articles loading...</strong></a>
+</div></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:1rem;">Recommended Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </div>
+</div>
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div><h4>Tools</h4><a href="./federal-tax-estimator.html">Federal Tax Estimator</a><a href="./self-employment-tax.html">Self-Employment Tax</a><a href="./refund-predictor.html">Refund Predictor</a><a href="./deduction-comparison.html">Deduction Comparison</a><a href="./quarterly-tax.html">Quarterly Tax</a><a href="./state-tax-comparison.html">State Tax Comparison</a></div>
+      <div><h4>Blog & Resources</h4><a href="../blog/index.html">All Articles</a><a href="../faq.html">FAQ</a><a href="../sitemap.html">Sitemap</a></div>
+      <div><h4>Legal</h4><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="../disclaimer.html">Disclaimer</a><a href="../disclosure.html">Ad Disclosure</a></div>
+      <div><h4>About</h4><a href="../about.html">About Us</a><a href="../contact.html">Contact</a><p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p></div>
+    </div>
+    <div class="tct-footer-bottom"><p>Tax Calc Tool. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<div class="tct-sticky-bar">Your data stays on your device. No information is stored on our servers.</div>
+
+<script src="../ads-loader.js"></script>
+
+<script>
+const TCT_DEFAULT_RATE = 0.22; // Default effective tax rate
+
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+function tctCalculateQuarterly() {
+  var q1 = parseFloat(document.getElementById('q1Income').value) || 0;
+  var q2 = parseFloat(document.getElementById('q2Income').value) || 0;
+  var q3 = parseFloat(document.getElementById('q3Income').value) || 0;
+  var q4 = parseFloat(document.getElementById('q4Income').value) || 0;
+  var status = document.getElementById('filingStatus').value;
+  var priorTax = parseFloat(document.getElementById('priorTax').value) || 0;
+  var useSafeHarbor = document.getElementById('useSafeHarbor').checked;
+
+  var totalIncome = q1 + q2 + q3 + q4;
+  var quarterlyTax = totalIncome * TCT_DEFAULT_RATE;
+  var safeHarbor = priorTax > 0 ? (priorTax > 150000 ? priorTax * 1.10 : priorTax) : 0;
+  var totalRequired = useSafeHarbor ? Math.max(quarterlyTax, safeHarbor) : quarterlyTax;
+
+  // Distribute across quarters (simplified: equal if income is even, proportional if not)
+  var q1Payment = totalIncome > 0 ? (q1 / totalIncome) * totalRequired : 0;
+  var q2Payment = totalIncome > 0 ? (q2 / totalIncome) * totalRequired : 0;
+  var q3Payment = totalIncome > 0 ? (q3 / totalIncome) * totalRequired : 0;
+  var q4Payment = totalIncome > 0 ? (q4 / totalIncome) * totalRequired : 0;
+
+  // Ensure safe harbor minimum per quarter if applicable
+  if (useSafeHarbor && priorTax > 0) {
+    var minQuarterly = safeHarbor / 4;
+    q1Payment = Math.max(q1Payment, minQuarterly);
+    q2Payment = Math.max(q2Payment, minQuarterly);
+    q3Payment = Math.max(q3Payment, minQuarterly);
+    q4Payment = Math.max(q4Payment, minQuarterly);
+  }
+
+  document.getElementById('q1Payment').textContent = '$' + q1Payment.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('q2Payment').textContent = '$' + q2Payment.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('q3Payment').textContent = '$' + q3Payment.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('q4Payment').textContent = '$' + q4Payment.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('totalIncome').textContent = '$' + totalIncome.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('totalTax').textContent = '$' + quarterlyTax.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('safeHarbor').textContent = '$' + safeHarbor.toLocaleString('en-US', {maximumFractionDigits: 0});
+
+  var msg = document.getElementById('safeHarborMsg');
+  if (useSafeHarbor && priorTax > 0) {
+    msg.textContent = 'Safe harbor active: You are protected from underpayment penalties.';
+    msg.style.background = 'var(--tct-success)';
+    msg.style.color = 'white';
+  } else if (priorTax === 0) {
+    msg.textContent = 'No prior tax entered. Safe harbor not applicable.';
+    msg.style.background = '#fff3cd';
+    msg.style.color = '#856404';
+  } else {
+    msg.textContent = 'Safe harbor disabled. Ensure quarterly payments cover 90% of current year tax.';
+    msg.style.background = '#f8d7da';
+    msg.style.color = '#721c24';
+  }
+
+  document.getElementById('resultArea').style.display = 'block';
+
+  tctDrawQuarterlyChart([q1Payment, q2Payment, q3Payment, q4Payment], totalIncome, quarterlyTax);
+  tctSaveToHistory({q1: q1, q2: q2, q3: q3, q4: q4, status: status, priorTax: priorTax, useSafeHarbor: useSafeHarbor, totalIncome: totalIncome, quarterlyTax: quarterlyTax, safeHarbor: safeHarbor, date: new Date().toLocaleDateString()});
+  tctSaveInputState();
+}
+
+function tctDrawQuarterlyChart(payments, totalIncome, totalTax) {
+  var canvas = document.getElementById('tctChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = 600 * dpr; canvas.height = 250 * dpr;
+  ctx.scale(dpr, dpr);
+  var w = 600, h = 250, pad = {top: 30, bottom: 50, left: 60, right: 30};
+  ctx.clearRect(0, 0, w, h);
+
+  var maxVal = Math.max.apply(null, payments) * 1.2;
+  var barW = (w - pad.left - pad.right - 40) / 4;
+  var labels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  var colors = ['#4a90a4', '#5ba3b8', '#e8913a', '#c45b4a'];
+
+  payments.forEach(function(p, i) {
+    var barH = (p / maxVal) * (h - pad.top - pad.bottom);
+    var x = pad.left + i * (barW + 10) + 10;
+    var y = h - pad.bottom - barH;
+    ctx.fillStyle = colors[i];
+    ctx.beginPath(); ctx.roundRect(x, y, barW, barH, 4); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
+    ctx.fillText('$' + p.toLocaleString(), x + barW/2, y - 6);
+    ctx.fillStyle = '#5c5c5c'; ctx.font = '11px Inter';
+    ctx.fillText(labels[i], x + barW/2, h - pad.bottom + 18);
+  });
+
+  ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+  ctx.fillText('Quarterly Estimated Tax Payments', w/2, 18);
+}
+
+function tctSaveResult() {
+  var q1 = document.getElementById('q1Payment').textContent;
+  var q2 = document.getElementById('q2Payment').textContent;
+  var q3 = document.getElementById('q3Payment').textContent;
+  var q4 = document.getElementById('q4Payment').textContent;
+  var total = document.getElementById('totalTax').textContent;
+  var text = '2026 Quarterly Tax Payments\nQ1: ' + q1 + '\nQ2: ' + q2 + '\nQ3: ' + q3 + '\nQ4: ' + q4 + '\nTotal: ' + total + '\nGenerated by taxcalctool.org';
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'quarterly-tax.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctExportResult() {
+  var history = JSON.parse(localStorage.getItem('tctQuarterlyHistory') || '[]');
+  if (history.length === 0) { alert('No data to export'); return; }
+  var csv = 'Date,Q1 Income,Q2 Income,Q3 Income,Q4 Income,Total Income,Quarterly Tax,Safe Harbor\n';
+  history.forEach(function(h) {
+    csv += [h.date, h.q1, h.q2, h.q3, h.q4, h.totalIncome, h.quarterlyTax, h.safeHarbor].join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'quarterly-tax-history.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctShareResult() {
+  var total = document.getElementById('totalTax').textContent;
+  var text = 'My 2026 quarterly estimated tax: ' + total + ' total. Calculate yours at taxcalctool.org';
+  if (navigator.share) {
+    navigator.share({title: 'Quarterly Tax', text: text});
+  } else {
+    navigator.clipboard.writeText(text).then(function() { alert('Copied to clipboard!'); });
+  }
+}
+
+function tctAddToCalendar() {
+  var dates = [
+    {date: '2026-04-15', label: 'Q1 Tax Due'},
+    {date: '2026-06-15', label: 'Q2 Tax Due'},
+    {date: '2026-09-15', label: 'Q3 Tax Due'},
+    {date: '2027-01-15', label: 'Q4 Tax Due'}
+  ];
+  var ics = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//TaxCalcTool//EN\n';
+  dates.forEach(function(d) {
+    ics += 'BEGIN:VEVENT\nSUMMARY:' + d.label + '\nDTSTART;VALUE=DATE:' + d.date.replace(/-/g, '') + '\nDTEND;VALUE=DATE:' + d.date.replace(/-/g, '') + '\nEND:VEVENT\n';
+  });
+  ics += 'END:VCALENDAR';
+  var blob = new Blob([ics], {type: 'text/calendar'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'tax-due-dates.ics'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctSaveToHistory(record) {
+  var history = JSON.parse(localStorage.getItem('tctQuarterlyHistory') || '[]');
+  history.unshift(record);
+  if (history.length > 10) history.pop();
+  localStorage.setItem('tctQuarterlyHistory', JSON.stringify(history));
+  tctRenderHistory();
+}
+
+function tctRenderHistory() {
+  var history = JSON.parse(localStorage.getItem('tctQuarterlyHistory') || '[]');
+  var el = document.getElementById('historyList');
+  if (history.length === 0) {
+    el.innerHTML = '<p style="color:var(--tct-text-light);">No saved calculations yet.</p>';
+    return;
+  }
+  var html = '';
+  history.forEach(function(h, i) {
+    html += '<div class="tct-history-item" onclick="tctLoadHistory(' + i + ')">';
+    html += '<strong>$' + h.totalIncome.toLocaleString() + '</strong> income — Tax: ' + h.quarterlyTax.toLocaleString() + ' — ' + h.date + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function tctLoadHistory(index) {
+  var history = JSON.parse(localStorage.getItem('tctQuarterlyHistory') || '[]');
+  var h = history[index];
+  if (!h) return;
+  document.getElementById('q1Income').value = h.q1;
+  document.getElementById('q2Income').value = h.q2;
+  document.getElementById('q3Income').value = h.q3;
+  document.getElementById('q4Income').value = h.q4;
+  document.getElementById('filingStatus').value = h.status;
+  document.getElementById('priorTax').value = h.priorTax;
+  document.getElementById('useSafeHarbor').checked = h.useSafeHarbor;
+  tctCalculateQuarterly();
+}
+
+function tctClearHistory() {
+  localStorage.removeItem('tctQuarterlyHistory');
+  tctRenderHistory();
+}
+
+function tctSaveInputState() {
+  var state = {
+    q1Income: document.getElementById('q1Income').value,
+    q2Income: document.getElementById('q2Income').value,
+    q3Income: document.getElementById('q3Income').value,
+    q4Income: document.getElementById('q4Income').value,
+    filingStatus: document.getElementById('filingStatus').value,
+    priorTax: document.getElementById('priorTax').value,
+    useSafeHarbor: document.getElementById('useSafeHarbor').checked
+  };
+  localStorage.setItem('tctQuarterlyInput', JSON.stringify(state));
+}
+
+function tctLoadInputState() {
+  var state = JSON.parse(localStorage.getItem('tctQuarterlyInput') || '{}');
+  if (state.q1Income) document.getElementById('q1Income').value = state.q1Income;
+  if (state.q2Income) document.getElementById('q2Income').value = state.q2Income;
+  if (state.q3Income) document.getElementById('q3Income').value = state.q3Income;
+  if (state.q4Income) document.getElementById('q4Income').value = state.q4Income;
+  if (state.filingStatus) document.getElementById('filingStatus').value = state.filingStatus;
+  if (state.priorTax) document.getElementById('priorTax').value = state.priorTax;
+  if (state.useSafeHarbor !== undefined) document.getElementById('useSafeHarbor').checked = state.useSafeHarbor;
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  tctLoadInputState();
+  tctRenderHistory();
+});
+</script>
+
+
+<script>
+// Load related articles
+fetch('../articles.json')
+  .then(r => r.json())
+  .then(articles => {
+    const currentCategory = 'SELF-EMPLOYMENT';
+    let related = articles.filter(a => a.category === currentCategory);
+    if (related.length < 3) {
+      const tagMatches = articles.filter(a => !related.includes(a) && a.tags && a.tags.some(t => ['self-employment', 'tax', 'federal'].includes(t)));
+      related = related.concat(tagMatches);
+    }
+    while (related.length < 3) {
+      const random = articles[Math.floor(Math.random() * articles.length)];
+      if (!related.includes(random)) related.push(random);
+    }
+    const container = document.getElementById('related-articles');
+    if (container) {
+      container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">' +
+        related.slice(0, 3).map(a =>
+          '<a href="../blog/' + a.slug + '.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;">' +
+          '<div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">' + (a.category || 'ARTICLE') + '</div>' +
+          '<strong>' + a.title + '</strong>' +
+          '<p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.5rem;">' + (a.excerpt ? a.excerpt.substring(0,80) : '') + '...</p></a>'
+        ).join('') +
+        '</div>';
+    }
+  })
+  .catch(() => {
+    const container = document.getElementById('related-articles');
+    if (container) container.innerHTML = '<p style="color:var(--tct-text-light);">Related articles loading...</p>';
+  });
+
+// Tool recommendations
+var toolCategory = 'SELF-EMPLOYMENT';
+var toolMap = {
+  'DEDUCTIONS': [
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'See how deductions affect your total tax.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Estimate your refund after deductions.']
+  ],
+  'FEDERAL': [
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Estimate your federal tax with 2026 OBBBA brackets.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Will you owe or get a refund? Find out before filing.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.']
+  ],
+  'SELF-EMPLOYMENT': [
+    ['../tools/self-employment-tax.html', '&#128188;', 'Self-Employment Tax Calculator', 'See exactly how much SE tax you will owe.'],
+    ['../tools/quarterly-tax.html', '&#128197;', 'Quarterly Tax Estimator', 'Calculate your estimated quarterly payments for 2026.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Full picture: income + SE tax combined.']
+  ],
+  'STATE-TAX': [
+    ['../tools/state-tax-comparison.html', '&#127758;', 'State Tax Comparison', 'Compare state income tax across all 50 states.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Federal + state combined tax picture.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'How state tax affects your deduction strategy.']
+  ]
+};
+var tools = toolMap[toolCategory] || toolMap['FEDERAL'];
+var toolHtml = '';
+for (var i = 0; i < tools.length; i++) {
+  var t = tools[i];
+  toolHtml += '<a href="' + t[0] + '" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);margin-bottom:0.75rem;">' +
+    '<div style="font-size:1.5rem;margin-bottom:0.5rem;">' + t[1] + '</div><strong>' + t[2] + '</strong><p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.25rem;">' + t[3] + '</p></a>';
+}
+var toolContainer = document.getElementById('other-tools');
+if (toolContainer) toolContainer.innerHTML = toolHtml;
+</script>
+tctLoadAds();
+</body>
+</html>
