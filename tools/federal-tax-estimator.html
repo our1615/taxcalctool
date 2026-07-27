@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federal Income Tax Estimator 2026 - Tax Calc Tool</title>
+<meta name="description" content="Free 2026 federal income tax estimator. Calculate your federal tax based on income, deductions, and filing status using official OBBBA brackets.">
+<link rel="canonical" href="https://taxcalctool.org/tools/federal-tax-estimator.html">
+<meta property="og:title" content="Federal Income Tax Estimator 2026 - Tax Calc Tool">
+<meta property="og:description" content="Free 2026 federal income tax estimator. Calculate your federal tax based on income, deductions, and filing status using official OBBBA brackets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/tools/federal-tax-estimator.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Federal Income Tax Estimator 2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Estimate your 2026 federal income tax using OBBBA-adjusted brackets and deductions"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://taxcalctool.org/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Federal Income Tax Estimator",
+      "item": "https://taxcalctool.org/tools/federal-tax-estimator.html"
+    }
+  ]
+}
+</script>
+<style>
+.tct-sidebar-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+.tct-calc-panel { background: var(--tct-card-bg); border-radius: 12px; padding: 2rem; box-shadow: var(--tct-shadow); }
+.tct-sidebar-panel { background: var(--tct-card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--tct-shadow); height: fit-content; }
+.tct-history-item { padding: 0.75rem; border-bottom: 1px solid var(--tct-border); font-size: 0.9rem; cursor: pointer; }
+.tct-history-item:hover { background: #f8f8f8; }
+.tct-bracket-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+.tct-bracket-row.active { background: #fff3f3; font-weight: 600; }
+#tctChart { width: 100%; height: 300px; margin-top: 1.5rem; }
+@media (max-width: 768px) { .tct-sidebar-layout { grid-template-columns: 1fr; } }
+</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Federal Income Tax Estimator - Tax Calc Tool">
+<meta name="twitter:description" content="Free 2026 federal income tax estimator. Calculate your federal tax based on income, deductions, and filing status using official OBBBA brackets.">
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="../index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav><ul class="tct-nav" id="mainNav">
+      <li><a href="./index.html">Tools</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb"><a href="../index.html">Home</a> / <a href="./index.html">Tools</a> / Federal Tax Estimator</nav>
+
+  <div id="tool_top" data-ad-slot="tool_top" class="tct-ad-slot"></div>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;">Federal Income Tax Estimator</h1>
+    <p style="color:var(--tct-text-light);margin-bottom:2rem;">Estimate your 2026 federal income tax using OBBBA-adjusted brackets. For planning only.</p>
+
+    <div class="tct-sidebar-layout">
+      <div>
+        <div class="tct-calc-panel">
+          <h3 style="margin-bottom:1.5rem;">Enter Your Information</h3>
+          <div class="tct-form-group">
+            <label class="tct-label">Filing Status</label>
+            <select id="filingStatus" class="tct-select">
+              <option value="single">Single</option>
+              <option value="married">Married Filing Jointly</option>
+              <option value="head">Head of Household</option>
+            </select>
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Annual Income ($)</label>
+            <input type="number" id="income" class="tct-input" placeholder="e.g. 75000" min="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Pre-Tax Deductions (401k, HSA, etc.) ($)</label>
+            <input type="number" id="pretax" class="tct-input" placeholder="e.g. 10000" min="0" value="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Itemized Deductions (or 0 for standard) ($)</label>
+            <input type="number" id="itemized" class="tct-input" placeholder="e.g. 15000" min="0" value="0">
+          </div>
+          <div class="tct-form-group">
+            <label class="tct-label">Tax Credits ($)</label>
+            <input type="number" id="credits" class="tct-input" placeholder="e.g. 2000" min="0" value="0">
+          </div>
+          <button class="tct-btn" onclick="tctCalculateTax()" style="width:100%;margin-top:1rem;">Calculate Tax</button>
+
+          <div id="resultBox" style="display:none;margin-top:1.5rem;">
+            <div class="tct-result-box">
+              <p style="opacity:0.9;">Estimated Federal Tax</p>
+              <div class="tct-result-amount" id="taxResult">$0</div>
+              <p style="opacity:0.8;margin-top:0.5rem;font-size:0.9rem;">Effective Rate: <span id="effRate">0%</span></p>
+            </div>
+            <canvas id="tctChart"></canvas>
+            <div style="margin-top:1rem;">
+              <button class="tct-btn" onclick="tctSaveResult()" style="margin-right:0.5rem;">Save Result</button>
+              <button class="tct-btn tct-btn-secondary" onclick="tctExportResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Export</button>
+              <button class="tct-btn tct-btn-secondary" onclick="tctShareResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Share URL</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tct-calc-panel" style="margin-top:2rem;">
+          <h3 style="margin-bottom:1rem;">How It Works</h3>
+          <div class="tct-accordion-item active">
+            <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">1. What This Calculator Does</div>
+            <div class="tct-accordion-body" style="display:block;">
+              <p>This estimator calculates your 2026 federal income tax using the OBBBA-adjusted tax brackets. It applies the standard deduction or your entered itemized deductions, then calculates tax owed at each bracket rate.</p>
+            </div>
+          </div>
+          <div class="tct-accordion-item">
+            <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">2. When to Use It</div>
+            <div class="tct-accordion-body">
+              <p>Use this calculator when planning your tax withholding, evaluating a job offer, or estimating quarterly payments. It's especially useful in Q4 when adjusting W-4 withholdings before year-end.</p>
+            </div>
+          </div>
+          <div class="tct-accordion-item">
+            <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">3. Calculation Method</div>
+            <div class="tct-accordion-body">
+              <p>Taxable Income = Gross Income - Pre-Tax Deductions - Greater of(Standard Deduction, Itemized Deductions). Tax is calculated progressively: 10% on first bracket, 12% on next, etc. Credits subtracted at the end.</p>
+            </div>
+          </div>
+          <div class="tct-accordion-item">
+            <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">4. Understanding Results</div>
+            <div class="tct-accordion-body">
+              <p>The effective rate shows your average tax burden. A 15% effective rate on $80k income means you keep $68k after federal tax. Compare this to your withholding to see if you'll owe or get a refund.</p>
+            </div>
+          </div>
+          <div class="tct-accordion-item">
+            <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">5. Disclaimer</div>
+            <div class="tct-accordion-body">
+              <p>This is an estimate for planning only. Actual tax depends on many factors including AMT, additional Medicare tax, capital gains, and specific credits. Consult a CPA for your exact liability.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="tool_middle" data-ad-slot="tool_middle" class="tct-ad-slot"></div>
+
+        <div class="tct-calc-panel" style="margin-top:2rem;">
+          <h3 style="margin-bottom:1rem;">Related Articles</h3>
+          <div id="related-articles"></div>
+        </div>
+
+        <div class="tct-calc-panel" style="margin-top:2rem;">
+          <h3 style="margin-bottom:1rem;">Other Tax Tools</h3>
+          <div id="other-tools"></div>
+        </div>
+      </div>
+
+      <div class="tct-sidebar-panel">
+        <h4 style="margin-bottom:1rem;color:var(--tct-primary);">2026 Tax Brackets</h4>
+        <div id="bracketDisplay"></div>
+        <h4 style="margin:1.5rem 0 1rem;color:var(--tct-primary);">Standard Deductions</h4>
+        <p style="font-size:0.9rem;margin-bottom:0.5rem;">Single: <strong>$16,100</strong></p>
+        <p style="font-size:0.9rem;margin-bottom:0.5rem;">Married Joint: <strong>$32,200</strong></p>
+        <p style="font-size:0.9rem;">Head of Household: <strong>$24,150</strong></p>
+
+        <h4 style="margin:1.5rem 0 1rem;color:var(--tct-primary);">Saved Calculations</h4>
+        <div id="historyList"><p style="color:var(--tct-text-light);font-size:0.9rem;">No saved calculations yet.</p></div>
+        <button class="tct-btn" onclick="tctClearHistory()" style="width:100%;margin-top:1rem;font-size:0.85rem;">Clear History</button>
+
+        <h4 style="margin:1.5rem 0 1rem;color:var(--tct-primary);">Compare</h4>
+        <button class="tct-btn tct-btn-secondary" onclick="tctCompareMode()" style="width:100%;border-color:var(--tct-primary);color:var(--tct-primary);">Enable Compare Mode</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+</div>
+
+
+<div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+
+<div style="margin:2rem 0;">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+<a href="../blog/index.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;"><div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">ARTICLE</div><strong>Related articles loading...</strong></a>
+</div></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:1rem;">Recommended Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </div>
+</div>
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div><h4>Tools</h4><a href="./federal-tax-estimator.html">Federal Tax Estimator</a><a href="./self-employment-tax.html">Self-Employment Tax</a><a href="./refund-predictor.html">Refund Predictor</a><a href="./deduction-comparison.html">Deduction Comparison</a><a href="./quarterly-tax.html">Quarterly Tax</a><a href="./state-tax-comparison.html">State Tax Comparison</a></div>
+      <div><h4>Blog & Resources</h4><a href="../blog/index.html">All Articles</a><a href="../faq.html">FAQ</a><a href="../sitemap.html">Sitemap</a></div>
+      <div><h4>Legal</h4><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="../disclaimer.html">Disclaimer</a><a href="../disclosure.html">Ad Disclosure</a></div>
+      <div><h4>About</h4><a href="../about.html">About Us</a><a href="../contact.html">Contact</a><p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p></div>
+    </div>
+    <div class="tct-footer-bottom"><p>Tax Calc Tool. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<div class="tct-sticky-bar">Your data stays on your device. No information is stored on our servers.</div>
+
+
+<script>
+// 2026 Tax Brackets (OBBBA adjusted)
+const TCT_BRACKETS = {
+  single: [
+    {limit: 11925, rate: 0.10},
+    {limit: 48475, rate: 0.12},
+    {limit: 103350, rate: 0.22},
+    {limit: 197300, rate: 0.24},
+    {limit: 250525, rate: 0.32},
+    {limit: 626350, rate: 0.35},
+    {limit: Infinity, rate: 0.37}
+  ],
+  married: [
+    {limit: 23850, rate: 0.10},
+    {limit: 96950, rate: 0.12},
+    {limit: 206700, rate: 0.22},
+    {limit: 394600, rate: 0.24},
+    {limit: 501050, rate: 0.32},
+    {limit: 751600, rate: 0.35},
+    {limit: Infinity, rate: 0.37}
+  ],
+  head: [
+    {limit: 17000, rate: 0.10},
+    {limit: 64850, rate: 0.12},
+    {limit: 103350, rate: 0.22},
+    {limit: 197300, rate: 0.24},
+    {limit: 250500, rate: 0.32},
+    {limit: 626350, rate: 0.35},
+    {limit: Infinity, rate: 0.37}
+  ]
+};
+
+const TCT_STANDARD_DEDUCTION = {single: 16100, married: 32200, head: 24150};
+
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+function tctCalculateTax() {
+  var income = parseFloat(document.getElementById('income').value) || 0;
+  var pretax = parseFloat(document.getElementById('pretax').value) || 0;
+  var itemized = parseFloat(document.getElementById('itemized').value) || 0;
+  var credits = parseFloat(document.getElementById('credits').value) || 0;
+  var status = document.getElementById('filingStatus').value;
+
+  var taxable = Math.max(0, income - pretax - Math.max(TCT_STANDARD_DEDUCTION[status], itemized));
+  var brackets = TCT_BRACKETS[status];
+  var tax = 0, prevLimit = 0, bracketTaxes = [];
+
+  for (var i = 0; i < brackets.length; i++) {
+    var b = brackets[i];
+    var amount = Math.min(taxable, b.limit) - prevLimit;
+    if (amount <= 0) break;
+    var bt = amount * b.rate;
+    tax += bt;
+    bracketTaxes.push({rate: b.rate, amount: amount, tax: bt});
+    prevLimit = b.limit;
+  }
+
+  tax = Math.max(0, tax - credits);
+  var effRate = income > 0 ? (tax / income * 100).toFixed(1) : 0;
+
+  document.getElementById('taxResult').textContent = '$' + tax.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('effRate').textContent = effRate + '%';
+  document.getElementById('resultBox').style.display = 'block';
+
+  tctDrawBracketChart(bracketTaxes, tax, income);
+  tctSaveToHistory({income: income, pretax: pretax, itemized: itemized, credits: credits, status: status, tax: tax, effRate: effRate, date: new Date().toLocaleDateString()});
+  tctSaveInputState();
+}
+
+function tctDrawBracketChart(bracketTaxes, totalTax, income) {
+  var canvas = document.getElementById('tctChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = 600 * dpr; canvas.height = 300 * dpr;
+  ctx.scale(dpr, dpr);
+  var w = 600, h = 300, pad = {top: 30, bottom: 50, left: 60, right: 30};
+  ctx.clearRect(0, 0, w, h);
+
+  if (bracketTaxes.length === 0) return;
+
+  var maxVal = Math.max(totalTax, bracketTaxes[0].tax) * 1.2;
+  var barW = (w - pad.left - pad.right - 20) / bracketTaxes.length;
+  var colors = ['#4a90a4', '#5ba3b8', '#e8913a', '#c45b4a', '#8b5a7c', '#2d4a3e', '#1a1a1a'];
+
+  bracketTaxes.forEach(function(bt, i) {
+    var barH = (bt.tax / maxVal) * (h - pad.top - pad.bottom);
+    var x = pad.left + i * barW + 10;
+    var y = h - pad.bottom - barH;
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.beginPath(); ctx.roundRect(x, y, barW - 20, barH, 4); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.font = '11px Inter'; ctx.textAlign = 'center';
+    ctx.fillText('$' + bt.tax.toFixed(0), x + (barW-20)/2, y - 6);
+    ctx.fillStyle = '#5c5c5c'; ctx.font = '10px Inter';
+    ctx.fillText((bt.rate*100).toFixed(0) + '%', x + (barW-20)/2, h - pad.bottom + 15);
+  });
+
+  ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+  ctx.fillText('Tax by Bracket (Total: $' + totalTax.toLocaleString() + ')', w/2, 18);
+}
+
+function tctSaveResult() {
+  var income = document.getElementById('income').value;
+  var tax = document.getElementById('taxResult').textContent;
+  var eff = document.getElementById('effRate').textContent;
+  var text = 'Federal Tax Estimate\nIncome: $' + income + '\nTax: ' + tax + '\nEffective Rate: ' + eff + '\nGenerated by taxcalctool.org';
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'tax-estimate.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctExportResult() {
+  tctSaveResult();
+}
+
+function tctShareResult() {
+  var income = document.getElementById('income').value;
+  var tax = document.getElementById('taxResult').textContent;
+  var text = 'My 2026 federal tax estimate: ' + tax + ' on $' + income + ' income. Calculate yours at taxcalctool.org';
+  if (navigator.share) {
+    navigator.share({title: 'Tax Estimate', text: text});
+  } else {
+    navigator.clipboard.writeText(text).then(function() { alert('Copied to clipboard!'); });
+  }
+}
+
+function tctSaveToHistory(record) {
+  var history = JSON.parse(localStorage.getItem('tctFederalHistory') || '[]');
+  history.unshift(record);
+  if (history.length > 10) history.pop();
+  localStorage.setItem('tctFederalHistory', JSON.stringify(history));
+  tctRenderHistory();
+}
+
+function tctRenderHistory() {
+  var history = JSON.parse(localStorage.getItem('tctFederalHistory') || '[]');
+  var el = document.getElementById('historyList');
+  if (history.length === 0) {
+    el.innerHTML = '<p style="color:var(--tct-text-light);font-size:0.9rem;">No saved calculations yet.</p>';
+    return;
+  }
+  var html = '';
+  history.forEach(function(h, i) {
+    html += '<div class="tct-history-item" onclick="tctLoadHistory(' + i + ')">';
+    html += '<strong>$' + h.income.toLocaleString() + '</strong> — Tax: ' + h.tax.toLocaleString() + ' (' + h.effRate + '%) — ' + h.date + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function tctLoadHistory(index) {
+  var history = JSON.parse(localStorage.getItem('tctFederalHistory') || '[]');
+  var h = history[index];
+  if (!h) return;
+  document.getElementById('filingStatus').value = h.status;
+  document.getElementById('income').value = h.income;
+  document.getElementById('pretax').value = h.pretax;
+  document.getElementById('itemized').value = h.itemized;
+  document.getElementById('credits').value = h.credits;
+  tctCalculateTax();
+}
+
+function tctClearHistory() {
+  localStorage.removeItem('tctFederalHistory');
+  tctRenderHistory();
+}
+
+function tctCompareMode() {
+  var history = JSON.parse(localStorage.getItem('tctFederalHistory') || '[]');
+  if (history.length < 2) { alert('Need at least 2 saved calculations to compare. Run the calculator twice with different inputs.'); return; }
+  var h1 = history[0], h2 = history[1];
+  var diff = h1.tax - h2.tax;
+  alert('Comparison:\nScenario 1: $' + h1.income.toLocaleString() + ' → Tax: ' + h1.tax.toLocaleString() + '\nScenario 2: $' + h2.income.toLocaleString() + ' → Tax: ' + h2.tax.toLocaleString() + '\nDifference: $' + diff.toLocaleString());
+}
+
+function tctSaveInputState() {
+  var state = {
+    filingStatus: document.getElementById('filingStatus').value,
+    income: document.getElementById('income').value,
+    pretax: document.getElementById('pretax').value,
+    itemized: document.getElementById('itemized').value,
+    credits: document.getElementById('credits').value
+  };
+  localStorage.setItem('tctFederalInput', JSON.stringify(state));
+}
+
+function tctLoadInputState() {
+  var state = JSON.parse(localStorage.getItem('tctFederalInput') || '{}');
+  if (state.filingStatus) document.getElementById('filingStatus').value = state.filingStatus;
+  if (state.income) document.getElementById('income').value = state.income;
+  if (state.pretax) document.getElementById('pretax').value = state.pretax;
+  if (state.itemized) document.getElementById('itemized').value = state.itemized;
+  if (state.credits) document.getElementById('credits').value = state.credits;
+}
+
+function tctRenderBrackets() {
+  var status = document.getElementById('filingStatus').value;
+  var brackets = TCT_BRACKETS[status];
+  var html = '';
+  var prev = 0;
+  brackets.forEach(function(b) {
+    var label = b.limit === Infinity ? b.limit : '$' + b.limit.toLocaleString();
+    html += '<div class="tct-bracket-row"><span>' + (b.rate*100).toFixed(0) + '%</span><span>$' + prev.toLocaleString() + ' — ' + label + '</span></div>';
+    prev = b.limit + 1;
+  });
+  document.getElementById('bracketDisplay').innerHTML = html;
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  tctLoadInputState();
+  tctRenderBrackets();
+  tctRenderHistory();
+  document.getElementById('filingStatus').addEventListener('change', tctRenderBrackets);
+});
+</script>
+
+
+<script>
+// Load related articles
+fetch('../articles.json')
+  .then(r => r.json())
+  .then(articles => {
+    const currentCategory = 'FEDERAL';
+    let related = articles.filter(a => a.category === currentCategory);
+    if (related.length < 3) {
+      const tagMatches = articles.filter(a => !related.includes(a) && a.tags && a.tags.some(t => ['federal', 'tax', 'federal'].includes(t)));
+      related = related.concat(tagMatches);
+    }
+    while (related.length < 3) {
+      const random = articles[Math.floor(Math.random() * articles.length)];
+      if (!related.includes(random)) related.push(random);
+    }
+    const container = document.getElementById('related-articles');
+    if (container) {
+      container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">' +
+        related.slice(0, 3).map(a =>
+          '<a href="../blog/' + a.slug + '.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;">' +
+          '<div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">' + (a.category || 'ARTICLE') + '</div>' +
+          '<strong>' + a.title + '</strong>' +
+          '<p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.5rem;">' + (a.excerpt ? a.excerpt.substring(0,80) : '') + '...</p></a>'
+        ).join('') +
+        '</div>';
+    }
+  })
+  .catch(() => {
+    const container = document.getElementById('related-articles');
+    if (container) container.innerHTML = '<p style="color:var(--tct-text-light);">Related articles loading...</p>';
+  });
+
+// Tool recommendations
+var toolCategory = 'FEDERAL';
+var toolMap = {
+  'DEDUCTIONS': [
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'See how deductions affect your total tax.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Estimate your refund after deductions.']
+  ],
+  'FEDERAL': [
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Estimate your federal tax with 2026 OBBBA brackets.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Will you owe or get a refund? Find out before filing.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.']
+  ],
+  'SELF-EMPLOYMENT': [
+    ['../tools/self-employment-tax.html', '&#128188;', 'Self-Employment Tax Calculator', 'See exactly how much SE tax you will owe.'],
+    ['../tools/quarterly-tax.html', '&#128197;', 'Quarterly Tax Estimator', 'Calculate your estimated quarterly payments for 2026.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Full picture: income + SE tax combined.']
+  ],
+  'STATE-TAX': [
+    ['../tools/state-tax-comparison.html', '&#127758;', 'State Tax Comparison', 'Compare state income tax across all 50 states.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Federal + state combined tax picture.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'How state tax affects your deduction strategy.']
+  ]
+};
+var tools = toolMap[toolCategory] || toolMap['FEDERAL'];
+var toolHtml = '';
+for (var i = 0; i < tools.length; i++) {
+  var t = tools[i];
+  toolHtml += '<a href="' + t[0] + '" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);margin-bottom:0.75rem;">' +
+    '<div style="font-size:1.5rem;margin-bottom:0.5rem;">' + t[1] + '</div><strong>' + t[2] + '</strong><p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.25rem;">' + t[3] + '</p></a>';
+}
+var toolContainer = document.getElementById('other-tools');
+if (toolContainer) toolContainer.innerHTML = toolHtml;
+</script>
+<script src="../ads-loader.js"></script>
+tctLoadAds();
+</body>
+</html>
