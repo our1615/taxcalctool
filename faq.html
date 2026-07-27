@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - Tax Calc Tool</title>
+<meta name="description" content="Frequently asked questions about tax calculators, self-employment tax, quarterly payments, and deductions.">
+<link rel="canonical" href="https://taxcalctool.org/faq.html">
+<meta property="og:title" content="FAQ - Tax Calc Tool">
+<meta property="og:description" content="Frequently asked questions about tax calculators, self-employment tax, quarterly payments, and deductions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/faq.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<style>
+.tct-faq-item { border: 1px solid var(--tct-border); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+.tct-faq-header { background: var(--tct-card-bg); padding: 1rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+.tct-faq-header:hover { background: #f8f8f8; }
+.tct-faq-header::after { content: '+'; font-size: 1.5rem; color: var(--tct-accent); }
+.tct-faq-item.active .tct-faq-header::after { content: '-'; }
+.tct-faq-body { padding: 1.5rem; display: none; background: white; }
+.tct-faq-item.active .tct-faq-body { display: block; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "FAQ",
+      "item": "https://taxcalctool.org/faq.html"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="./index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav>
+      <ul class="tct-nav" id="mainNav">
+        <li><a href="./tools/index.html">Tools</a></li>
+        <li><a href="./blog/index.html">Blog</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./faq.html">FAQ</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb">
+    <a href="./index.html">Home</a> / FAQ
+  </nav>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:2rem;text-align:center;">Frequently Asked Questions</h1>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Are these calculators accurate for filing my actual tax return?</div>
+      <div class="tct-faq-body">
+        <p>These calculators provide estimates for planning purposes only. They use current IRS formulas and 2026 brackets, but your actual tax liability depends on many factors not captured here (credits, special deductions, AMT, etc.). Always verify with IRS worksheets or a tax professional before filing.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Do the calculators store my personal information?</div>
+      <div class="tct-faq-body">
+        <p>No. All calculations happen entirely in your browser using JavaScript. No data is sent to our servers, stored in databases, or shared with third parties. You can verify this by checking the page source - there are no external API calls for calculations.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">What tax year do these calculators use?</div>
+      <div class="tct-faq-body">
+        <p>All calculators are updated for tax year 2026, reflecting the One Big Beautiful Bill Act (OBBBA) changes that made most TCJA provisions permanent. This includes 2026 brackets, standard deductions ($16,100 single / $32,200 married), and self-employment tax rates (15.3%).</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">I'm self-employed. How do I know if I need to pay quarterly taxes?</div>
+      <div class="tct-faq-body">
+        <p>If you expect to owe $1,000 or more in tax for 2026 after subtracting withholding and credits, you generally need to make quarterly estimated payments. Use our Quarterly Tax Calculator to estimate your required payments for Q1-Q4. Missing payments can result in penalties even if you get a refund at year-end.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Should I take the standard deduction or itemize?</div>
+      <div class="tct-faq-body">
+        <p>For 2026, the standard deduction is $16,100 (single) or $32,200 (married filing jointly). Itemizing only makes sense if your total deductions exceed these amounts. Common itemized deductions include mortgage interest, state/local taxes (capped at $10,000), charitable donations, and medical expenses exceeding 7.5% of AGI. Use our Standard vs Itemized calculator to compare.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">What is the self-employment tax rate for 2026?</div>
+      <div class="tct-faq-body">
+        <p>The self-employment tax rate remains 15.3% for 2026: 12.4% for Social Security (up to the wage base of $176,100) and 2.9% for Medicare (no cap). High earners above $200,000 single / $250,000 married pay an additional 0.9% Medicare surtax. You can deduct 50% of your SE tax on your return.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">When are quarterly estimated tax payments due in 2026?</div>
+      <div class="tct-faq-body">
+        <p>The 2026 quarterly due dates are: Q1 - April 15, Q2 - June 15, Q3 - September 15, Q4 - January 15, 2027. If a due date falls on a weekend or holiday, the payment is due the next business day. Use Form 1040-ES or our calculator to determine the amount.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Can I deduct my home office expenses?</div>
+      <div class="tct-faq-body">
+        <p>Yes, if you use part of your home exclusively and regularly for business. You can use the simplified method ($5 per square foot, max 300 sq ft = $1,500) or actual expenses (percentage of home costs). The simplified method is easier; actual expenses often yield larger deductions but require detailed records.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Does moving to a different state affect my taxes?</div>
+      <div class="tct-faq-body">
+        <p>Absolutely. States have wildly different tax regimes - nine states have no income tax (including Texas, Florida, Nevada), while California and New York have high marginal rates. If you move mid-year, you may need to file part-year resident returns in both states. Our State Tax Comparison tool shows the effective tax burden by state.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Is this site affiliated with the IRS?</div>
+      <div class="tct-faq-body">
+        <p>No. Tax Calc Tool is an independent educational resource created by a former IRS Revenue Agent, but we have no official affiliation with the Internal Revenue Service, any state tax agency, or any tax preparation company. The calculators are for estimation and planning only.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">Can I get personalized tax advice from this site?</div>
+      <div class="tct-faq-body">
+        <p>No. We share general tax information and calculators for educational purposes only. We do not provide personalized tax advice, tax preparation services, or legal counsel. For your specific situation, please consult a qualified CPA, Enrolled Agent, or tax attorney.</p>
+      </div>
+    </div>
+
+    <div class="tct-faq-item">
+      <div class="tct-faq-header" onclick="this.parentElement.classList.toggle('active')">How often are the calculators updated?</div>
+      <div class="tct-faq-body">
+        <p>We update calculators annually when the IRS releases inflation adjustments (typically October/November for the following tax year). We also make immediate updates for major tax law changes like the OBBBA. Each calculator page shows the last updated date.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div>
+        <h4>Tools</h4>
+        <a href="./tools/federal-tax-estimator.html">Federal Tax Estimator</a>
+        <a href="./tools/self-employment-tax.html">Self-Employment Tax</a>
+        <a href="./tools/refund-predictor.html">Refund Predictor</a>
+        <a href="./tools/deduction-comparison.html">Deduction Comparison</a>
+        <a href="./tools/quarterly-tax.html">Quarterly Tax</a>
+        <a href="./tools/state-tax-comparison.html">State Tax Comparison</a>
+      </div>
+      <div>
+        <h4>Blog & Resources</h4>
+        <a href="./blog/index.html">All Articles</a>
+        <a href="./faq.html">FAQ</a>
+        <a href="./sitemap.html">Sitemap</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms of Use</a>
+        <a href="./disclaimer.html">Disclaimer</a>
+        <a href="./disclosure.html">Ad Disclosure</a>
+      </div>
+      <div>
+        <h4>About</h4>
+        <a href="./about.html">About Us</a>
+        <a href="./contact.html">Contact</a>
+        <p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p>
+      </div>
+    </div>
+    <div class="tct-footer-bottom">
+      <p>Tax Calc Tool. All rights reserved. This site contains affiliate links and advertisements.</p>
+      <p style="margin-top:0.5rem;">Not financial advice. Consult a qualified tax professional for your specific situation.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+</script>
+</body>
+</html>
