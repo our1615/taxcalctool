@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Tax Comparison Tool 2026 - Tax Calc Tool</title>
+<meta name="description" content="Compare state income tax rates across all 50 US states. See effective rates, brackets, and no-tax states for 2026.">
+<link rel="canonical" href="https://taxcalctool.org/tools/state-tax-comparison.html">
+<meta property="og:title" content="State Tax Comparison Tool 2026 - Tax Calc Tool">
+<meta property="og:description" content="Compare state income tax rates across all 50 US states. See effective rates, brackets, and no-tax states for 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/tools/state-tax-comparison.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "State Tax Comparison Tool 2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Compare state income tax rates and brackets across all 50 US states"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://taxcalctool.org/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "State Tax Comparison",
+      "item": "https://taxcalctool.org/tools/state-tax-comparison.html"
+    }
+  ]
+}
+</script>
+<style>
+.tct-search-container { max-width: 900px; margin: 0 auto; }
+.tct-search-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.tct-search-input { flex: 1; padding: 0.875rem 1rem; border: 2px solid var(--tct-border); border-radius: 8px; font-size: 1rem; font-family: inherit; }
+.tct-search-input:focus { outline: none; border-color: var(--tct-primary-light); }
+.tct-state-list { list-style: none; }
+.tct-state-item { background: var(--tct-card-bg); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 0.75rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 1rem; align-items: center; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+.tct-state-item:hover { border-color: var(--tct-accent); transform: translateX(4px); }
+.tct-state-item.selected { border-color: var(--tct-primary); background: #f0ecf5; }
+.tct-state-name { font-weight: 600; color: var(--tct-primary); }
+.tct-state-rate { text-align: center; }
+.tct-rate-value { font-size: 1.25rem; font-weight: 700; font-family: 'Playfair Display', serif; }
+.tct-rate-label { font-size: 0.8rem; color: var(--tct-text-light); }
+.tct-no-tax { color: var(--tct-success); }
+.tct-high-tax { color: var(--tct-accent); }
+.tct-compare-panel { background: var(--tct-card-bg); border-radius: 12px; padding: 1.5rem; box-shadow: var(--tct-shadow); margin-top: 1.5rem; }
+.tct-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.tct-compare-box { padding: 1.5rem; border-radius: 8px; text-align: center; }
+.tct-history-item { padding: 0.75rem; border-bottom: 1px solid var(--tct-border); font-size: 0.9rem; cursor: pointer; }
+.tct-history-item:hover { background: #f8f8f8; }
+#tctChart { width: 100%; height: 350px; margin-top: 1rem; }
+@media (max-width: 768px) { .tct-state-item { grid-template-columns: 1fr 1fr; gap: 0.5rem; } .tct-compare-grid { grid-template-columns: 1fr; } }
+</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="State Tax Comparison - Tax Calc Tool">
+<meta name="twitter:description" content="Compare state income tax rates across all 50 US states. See effective rates, brackets, and no-tax states for 2026.">
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="../index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav><ul class="tct-nav" id="mainNav">
+      <li><a href="./index.html">Tools</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb"><a href="../index.html">Home</a> / <a href="./index.html">Tools</a> / State Tax Comparison</nav>
+
+  <div id="tool_top" data-ad-slot="tool_top" class="tct-ad-slot"></div>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;text-align:center;">State Tax Comparison Tool</h1>
+    <p style="color:var(--tct-text-light);margin-bottom:2rem;text-align:center;">Compare income tax rates across all 50 states. Select two states to see side-by-side comparison for your income level.</p>
+
+    <div class="tct-search-container">
+      <div class="tct-search-bar">
+        <input type="text" id="searchInput" class="tct-search-input" placeholder="Search states..." oninput="tctFilterStates()">
+        <select id="filterType" class="tct-select" style="width:180px;" onchange="tctFilterStates()">
+          <option value="all">All States</option>
+          <option value="no-tax">No Income Tax</option>
+          <option value="flat">Flat Tax</option>
+          <option value="progressive">Progressive</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:1rem;font-size:0.9rem;color:var(--tct-text-light);">
+        Your Annual Income: $<input type="number" id="userIncome" class="tct-input" style="width:150px;display:inline-block;" placeholder="75000" value="75000" min="0" onchange="tctUpdateAll()">
+        <button class="tct-btn" onclick="tctUpdateAll()" style="padding:0.5rem 1rem;margin-left:0.5rem;">Update</button>
+      </div>
+
+      <ul id="stateList" class="tct-state-list"></ul>
+
+      <div id="comparePanel" class="tct-compare-panel" style="display:none;">
+        <h3 style="text-align:center;margin-bottom:1.5rem;">State Comparison</h3>
+        <div class="tct-compare-grid">
+          <div class="tct-compare-box" id="state1Box" style="background:linear-gradient(135deg,#f0ecf5,#e8e0f0);border:2px solid var(--tct-primary-light);">
+            <div style="font-size:0.9rem;color:var(--tct-text-light);">State 1</div>
+            <h2 id="state1Name" style="margin:0.5rem 0;">-</h2>
+            <div style="font-size:2rem;font-weight:700;color:var(--tct-primary);font-family:'Playfair Display',serif;" id="state1Tax">$0</div>
+            <div style="font-size:0.9rem;color:var(--tct-text-light);">Estimated State Tax</div>
+            <div style="margin-top:1rem;font-size:0.85rem;" id="state1Details"></div>
+          </div>
+          <div class="tct-compare-box" id="state2Box" style="background:linear-gradient(135deg,#fff5f5,#ffe8e8);border:2px solid var(--tct-accent);">
+            <div style="font-size:0.9rem;color:var(--tct-text-light);">State 2</div>
+            <h2 id="state2Name" style="margin:0.5rem 0;">-</h2>
+            <div style="font-size:2rem;font-weight:700;color:var(--tct-accent);font-family:'Playfair Display',serif;" id="state2Tax">$0</div>
+            <div style="font-size:0.9rem;color:var(--tct-text-light);">Estimated State Tax</div>
+            <div style="margin-top:1rem;font-size:0.85rem;" id="state2Details"></div>
+          </div>
+        </div>
+        <div id="savingsBox" style="text-align:center;margin-top:1.5rem;padding:1rem;border-radius:8px;font-weight:600;"></div>
+        <canvas id="tctChart"></canvas>
+        <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap;">
+          <button class="tct-btn" onclick="tctSaveResult()">Save Comparison</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctExportResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Export</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctShareResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Share</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctClearSelection()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Clear</button>
+        </div>
+      </div>
+
+      <div class="tct-compare-panel" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">How It Works</h3>
+        <div class="tct-accordion-item active">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">1. What This Calculator Does</div>
+          <div class="tct-accordion-body" style="display:block;">
+            <p>Compares state income tax burdens across all 50 states based on your income level. Shows estimated tax for each state using current 2026 rates and brackets. Select any two states for a side-by-side comparison with dollar savings.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">2. When to Use It</div>
+          <div class="tct-accordion-body">
+            <p>Use this when considering a move, evaluating a remote work arrangement, or comparing job offers in different states. Also useful for retirees choosing where to settle. Remember: state tax is just one factor in cost of living.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">3. Calculation Method</div>
+          <div class="tct-accordion-body">
+            <p>For flat-tax states: Income × flat rate. For progressive states: applies brackets progressively like federal tax. No-tax states show $0. Estimates are for state income tax only - does not include property tax, sales tax, or local taxes.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">4. Understanding Results</div>
+          <div class="tct-accordion-body">
+            <p>The dollar difference between two states is your annual savings (or cost) from moving. A $5,000 difference on $75k income is significant. But factor in property taxes, cost of living, and quality of life. Texas has no income tax but high property taxes; California has high income tax but Prop 13 limits property tax growth.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">5. Disclaimer</div>
+          <div class="tct-accordion-body">
+            <p>State tax rates change frequently. This tool uses 2026 rates as of May 2026. Some states have local income taxes not included. Does not account for deductions, credits, or special rules (e.g., NH/TX dividend taxes). Verify current rates with state revenue departments.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool_middle" data-ad-slot="tool_middle" class="tct-ad-slot"></div>
+
+      <div class="tct-compare-panel" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Saved Comparisons</h3>
+        <div id="historyList"><p style="color:var(--tct-text-light);">No saved comparisons yet.</p></div>
+        <button class="tct-btn" onclick="tctClearHistory()" style="margin-top:1rem;">Clear History</button>
+      </div>
+
+      <div class="tct-compare-panel" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Related Articles</h3>
+        <div id="related-articles"></div>
+      </div>
+
+      <div class="tct-compare-panel" style="margin-top:2rem;">
+        <h3 style="margin-bottom:1rem;">Other Tax Tools</h3>
+        <div id="other-tools"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+</div>
+
+
+<div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+
+<div style="margin:2rem 0;">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+<a href="../blog/index.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;"><div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">ARTICLE</div><strong>Related articles loading...</strong></a>
+</div></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:1rem;">Recommended Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </div>
+</div>
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div><h4>Tools</h4><a href="./federal-tax-estimator.html">Federal Tax Estimator</a><a href="./self-employment-tax.html">Self-Employment Tax</a><a href="./refund-predictor.html">Refund Predictor</a><a href="./deduction-comparison.html">Deduction Comparison</a><a href="./quarterly-tax.html">Quarterly Tax</a><a href="./state-tax-comparison.html">State Tax Comparison</a></div>
+      <div><h4>Blog & Resources</h4><a href="../blog/index.html">All Articles</a><a href="../faq.html">FAQ</a><a href="../sitemap.html">Sitemap</a></div>
+      <div><h4>Legal</h4><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="../disclaimer.html">Disclaimer</a><a href="../disclosure.html">Ad Disclosure</a></div>
+      <div><h4>About</h4><a href="../about.html">About Us</a><a href="../contact.html">Contact</a><p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p></div>
+    </div>
+    <div class="tct-footer-bottom"><p>Tax Calc Tool. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<div class="tct-sticky-bar">Your data stays on your device. No information is stored on our servers.</div>
+
+<script src="../ads-loader.js"></script>
+
+<script>
+const TCT_STATES = [
+  {name: 'Alaska', abbr: 'AK', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Florida', abbr: 'FL', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Nevada', abbr: 'NV', type: 'no-tax', rate: 0, flat: true},
+  {name: 'South Dakota', abbr: 'SD', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Tennessee', abbr: 'TN', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Texas', abbr: 'TX', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Washington', abbr: 'WA', type: 'no-tax', rate: 0, flat: true},
+  {name: 'Wyoming', abbr: 'WY', type: 'no-tax', rate: 0, flat: true},
+  {name: 'New Hampshire', abbr: 'NH', type: 'no-tax', rate: 0, flat: true, note: 'Interest/dividends only'},
+  {name: 'Arizona', abbr: 'AZ', type: 'flat', rate: 0.025, flat: true},
+  {name: 'Colorado', abbr: 'CO', type: 'flat', rate: 0.044, flat: true},
+  {name: 'Idaho', abbr: 'ID', type: 'flat', rate: 0.058, flat: true},
+  {name: 'Illinois', abbr: 'IL', type: 'flat', rate: 0.0495, flat: true},
+  {name: 'Indiana', abbr: 'IN', type: 'flat', rate: 0.0323, flat: true},
+  {name: 'Kentucky', abbr: 'KY', type: 'flat', rate: 0.045, flat: true},
+  {name: 'Massachusetts', abbr: 'MA', type: 'flat', rate: 0.05, flat: true},
+  {name: 'Michigan', abbr: 'MI', type: 'flat', rate: 0.0425, flat: true},
+  {name: 'Mississippi', abbr: 'MS', type: 'flat', rate: 0.05, flat: true},
+  {name: 'North Carolina', abbr: 'NC', type: 'flat', rate: 0.045, flat: true},
+  {name: 'Pennsylvania', abbr: 'PA', type: 'flat', rate: 0.0307, flat: true},
+  {name: 'Utah', abbr: 'UT', type: 'flat', rate: 0.0465, flat: true},
+  {name: 'California', abbr: 'CA', type: 'progressive', rate: 0.093, flat: false, brackets: [{limit: 10000, rate: 0.01}, {limit: 25000, rate: 0.02}, {limit: 50000, rate: 0.04}, {limit: 100000, rate: 0.06}, {limit: 250000, rate: 0.08}, {limit: Infinity, rate: 0.093}]},
+  {name: 'New York', abbr: 'NY', type: 'progressive', rate: 0.0685, flat: false, brackets: [{limit: 8500, rate: 0.04}, {limit: 11700, rate: 0.045}, {limit: 13900, rate: 0.0525}, {limit: 80650, rate: 0.0585}, {limit: 215400, rate: 0.0625}, {limit: Infinity, rate: 0.0685}]},
+  {name: 'New Jersey', abbr: 'NJ', type: 'progressive', rate: 0.0637, flat: false, brackets: [{limit: 20000, rate: 0.014}, {limit: 35000, rate: 0.0175}, {limit: 50000, rate: 0.0245}, {limit: 75000, rate: 0.035}, {limit: 500000, rate: 0.055}, {limit: Infinity, rate: 0.0637}]},
+  {name: 'Oregon', abbr: 'OR', type: 'progressive', rate: 0.0875, flat: false, brackets: [{limit: 3750, rate: 0.0475}, {limit: 9400, rate: 0.0675}, {limit: 125000, rate: 0.0875}, {limit: Infinity, rate: 0.0875}]},
+  {name: 'Minnesota', abbr: 'MN', type: 'progressive', rate: 0.0785, flat: false, brackets: [{limit: 30070, rate: 0.0535}, {limit: 98760, rate: 0.0705}, {limit: Infinity, rate: 0.0785}]},
+  {name: 'Hawaii', abbr: 'HI', type: 'progressive', rate: 0.0825, flat: false, brackets: [{limit: 2400, rate: 0.014}, {limit: 4800, rate: 0.032}, {limit: 9600, rate: 0.055}, {limit: 14400, rate: 0.064}, {limit: 19200, rate: 0.068}, {limit: 24000, rate: 0.072}, {limit: 36000, rate: 0.076}, {limit: 48000, rate: 0.079}, {limit: 150000, rate: 0.0825}, {limit: Infinity, rate: 0.0825}]},
+  {name: 'Iowa', abbr: 'IA', type: 'progressive', rate: 0.06, flat: false, brackets: [{limit: 1735, rate: 0.0033}, {limit: 3470, rate: 0.0067}, {limit: 6940, rate: 0.0225}, {limit: 15645, rate: 0.0414}, {limit: 26075, rate: 0.0563}, {limit: 34700, rate: 0.0596}, {limit: 52050, rate: 0.0625}, {limit: 78100, rate: 0.0744}, {limit: Infinity, rate: 0.06}]},
+  {name: 'Wisconsin', abbr: 'WI', type: 'progressive', rate: 0.0765, flat: false, brackets: [{limit: 12760, rate: 0.0354}, {limit: 25520, rate: 0.0465}, {limit: 280950, rate: 0.053}, {limit: Infinity, rate: 0.0765}]},
+  {name: 'Ohio', abbr: 'OH', type: 'progressive', rate: 0.0399, flat: false, brackets: [{limit: 26050, rate: 0.0285}, {limit: 104150, rate: 0.03326}, {limit: 208300, rate: 0.03688}, {limit: Infinity, rate: 0.0399}]},
+  {name: 'Georgia', abbr: 'GA', type: 'progressive', rate: 0.0575, flat: false, brackets: [{limit: 750, rate: 0.01}, {limit: 2250, rate: 0.02}, {limit: 3750, rate: 0.03}, {limit: 5250, rate: 0.04}, {limit: 7000, rate: 0.05}, {limit: Infinity, rate: 0.0575}]},
+  {name: 'Virginia', abbr: 'VA', type: 'progressive', rate: 0.0575, flat: false, brackets: [{limit: 3000, rate: 0.02}, {limit: 5000, rate: 0.03}, {limit: 17000, rate: 0.05}, {limit: Infinity, rate: 0.0575}]},
+  {name: 'Maryland', abbr: 'MD', type: 'progressive', rate: 0.0575, flat: false, brackets: [{limit: 1000, rate: 0.02}, {limit: 2000, rate: 0.03}, {limit: 3000, rate: 0.04}, {limit: 100000, rate: 0.0475}, {limit: 125000, rate: 0.05}, {limit: 150000, rate: 0.0525}, {limit: 250000, rate: 0.055}, {limit: Infinity, rate: 0.0575}]},
+  {name: 'Connecticut', abbr: 'CT', type: 'progressive', rate: 0.0699, flat: false, brackets: [{limit: 10000, rate: 0.03}, {limit: 50000, rate: 0.05}, {limit: 100000, rate: 0.055}, {limit: 200000, rate: 0.06}, {limit: 250000, rate: 0.065}, {limit: 500000, rate: 0.069}, {limit: Infinity, rate: 0.0699}]},
+  {name: 'Vermont', abbr: 'VT', type: 'progressive', rate: 0.0875, flat: false, brackets: [{limit: 42150, rate: 0.0335}, {limit: 102200, rate: 0.066}, {limit: 213150, rate: 0.076}, {limit: Infinity, rate: 0.0875}]},
+  {name: 'Maine', abbr: 'ME', type: 'progressive', rate: 0.0715, flat: false, brackets: [{limit: 24500, rate: 0.058}, {limit: 58050, rate: 0.0675}, {limit: Infinity, rate: 0.0715}]},
+  {name: 'Rhode Island', abbr: 'RI', type: 'progressive', rate: 0.0599, flat: false, brackets: [{limit: 68200, rate: 0.0375}, {limit: 155050, rate: 0.0475}, {limit: Infinity, rate: 0.0599}]},
+  {name: 'Delaware', abbr: 'DE', type: 'progressive', rate: 0.066, flat: false, brackets: [{limit: 2000, rate: 0.0}, {limit: 5000, rate: 0.022}, {limit: 10000, rate: 0.039}, {limit: 20000, rate: 0.048}, {limit: 25000, rate: 0.052}, {limit: 60000, rate: 0.0555}, {limit: Infinity, rate: 0.066}]},
+  {name: 'Montana', abbr: 'MT', type: 'progressive', rate: 0.069, flat: false, brackets: [{limit: 3300, rate: 0.01}, {limit: 5800, rate: 0.02}, {limit: 8900, rate: 0.03}, {limit: 12000, rate: 0.04}, {limit: 15400, rate: 0.05}, {limit: 19800, rate: 0.06}, {limit: 25400, rate: 0.069}, {limit: Infinity, rate: 0.069}]},
+  {name: 'Nebraska', abbr: 'NE', type: 'progressive', rate: 0.0664, flat: false, brackets: [{limit: 3700, rate: 0.0246}, {limit: 22170, rate: 0.0351}, {limit: 35730, rate: 0.0501}, {limit: Infinity, rate: 0.0664}]},
+  {name: 'New Mexico', abbr: 'NM', type: 'progressive', rate: 0.059, flat: false, brackets: [{limit: 5500, rate: 0.017}, {limit: 11000, rate: 0.032}, {limit: 16000, rate: 0.047}, {limit: 210000, rate: 0.049}, {limit: Infinity, rate: 0.059}]},
+  {name: 'Oklahoma', abbr: 'OK', type: 'progressive', rate: 0.0475, flat: false, brackets: [{limit: 1000, rate: 0.0025}, {limit: 2500, rate: 0.0075}, {limit: 3750, rate: 0.0175}, {limit: 4900, rate: 0.0275}, {limit: 7200, rate: 0.0375}, {limit: Infinity, rate: 0.0475}]},
+  {name: 'Arkansas', abbr: 'AR', type: 'progressive', rate: 0.059, flat: false, brackets: [{limit: 4600, rate: 0.02}, {limit: 9100, rate: 0.04}, {limit: Infinity, rate: 0.059}]},
+  {name: 'Louisiana', abbr: 'LA', type: 'progressive', rate: 0.0425, flat: false, brackets: [{limit: 12500, rate: 0.0185}, {limit: 50000, rate: 0.035}, {limit: Infinity, rate: 0.0425}]},
+  {name: 'Alabama', abbr: 'AL', type: 'progressive', rate: 0.05, flat: false, brackets: [{limit: 500, rate: 0.02}, {limit: 3000, rate: 0.04}, {limit: Infinity, rate: 0.05}]},
+  {name: 'Missouri', abbr: 'MO', type: 'progressive', rate: 0.054, flat: false, brackets: [{limit: 1121, rate: 0.015}, {limit: 2242, rate: 0.02}, {limit: 3363, rate: 0.025}, {limit: 4484, rate: 0.03}, {limit: 5605, rate: 0.035}, {limit: 6726, rate: 0.04}, {limit: 7847, rate: 0.045}, {limit: Infinity, rate: 0.054}]},
+  {name: 'Kansas', abbr: 'KS', type: 'progressive', rate: 0.057, flat: false, brackets: [{limit: 15000, rate: 0.031}, {limit: 30000, rate: 0.0525}, {limit: Infinity, rate: 0.057}]},
+  {name: 'West Virginia', abbr: 'WV', type: 'progressive', rate: 0.065, flat: false, brackets: [{limit: 10000, rate: 0.03}, {limit: 25000, rate: 0.04}, {limit: 40000, rate: 0.045}, {limit: 60000, rate: 0.06}, {limit: Infinity, rate: 0.065}]},
+  {name: 'North Dakota', abbr: 'ND', type: 'progressive', rate: 0.029, flat: false, brackets: [{limit: 43000, rate: 0.0104}, {limit: 173000, rate: 0.0204}, {limit: Infinity, rate: 0.029}]},
+  {name: 'South Carolina', abbr: 'SC', type: 'progressive', rate: 0.064, flat: false, brackets: [{limit: 3200, rate: 0.0}, {limit: 16040, rate: 0.03}, {limit: Infinity, rate: 0.064}]}
+];
+
+var tctSelectedStates = [];
+
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+function tctCalculateStateTax(income, state) {
+  if (state.type === 'no-tax') return 0;
+  if (state.flat) return income * state.rate;
+  if (state.brackets) {
+    var tax = 0, prev = 0;
+    for (var i = 0; i < state.brackets.length; i++) {
+      var b = state.brackets[i];
+      var amount = Math.min(income, b.limit) - prev;
+      if (amount <= 0) break;
+      tax += amount * b.rate;
+      prev = b.limit;
+    }
+    return tax;
+  }
+  return income * state.rate; // fallback
+}
+
+function tctFilterStates() {
+  var search = document.getElementById('searchInput').value.toLowerCase();
+  var filter = document.getElementById('filterType').value;
+  var income = parseFloat(document.getElementById('userIncome').value) || 75000;
+  var list = document.getElementById('stateList');
+
+  var filtered = TCT_STATES.filter(function(s) {
+    if (search && !s.name.toLowerCase().includes(search)) return false;
+    if (filter === 'no-tax' && s.type !== 'no-tax') return false;
+    if (filter === 'flat' && !s.flat) return false;
+    if (filter === 'progressive' && s.type !== 'progressive') return false;
+    return true;
+  });
+
+  var html = '';
+  filtered.forEach(function(s) {
+    var tax = tctCalculateStateTax(income, s);
+    var selected = tctSelectedStates.includes(s.abbr) ? 'selected' : '';
+    var rateText = s.type === 'no-tax' ? '0%' : (s.flat ? (s.rate * 100).toFixed(2) + '%' : 'Up to ' + (s.rate * 100).toFixed(1) + '%');
+    var taxClass = tax === 0 ? 'tct-no-tax' : (tax > income * 0.05 ? 'tct-high-tax' : '');
+    html += '<li class="tct-state-item ' + selected + '" onclick="tctSelectState('' + s.abbr + '')">';
+    html += '<span class="tct-state-name">' + s.name + ' (' + s.abbr + ')</span>';
+    html += '<span class="tct-state-rate ' + taxClass + '"><span class="tct-rate-value">' + rateText + '</span><span class="tct-rate-label">Rate</span></span>';
+    html += '<span class="tct-state-rate"><span class="tct-rate-value">$' + tax.toLocaleString('en-US', {maximumFractionDigits: 0}) + '</span><span class="tct-rate-label">On $' + income.toLocaleString() + '</span></span>';
+    html += '<span>' + (s.type === 'no-tax' ? 'No Tax' : (s.flat ? 'Flat' : 'Progressive')) + '</span>';
+    html += '</li>';
+  });
+  list.innerHTML = html;
+}
+
+function tctSelectState(abbr) {
+  var idx = tctSelectedStates.indexOf(abbr);
+  if (idx >= 0) {
+    tctSelectedStates.splice(idx, 1);
+  } else {
+    if (tctSelectedStates.length >= 2) tctSelectedStates.shift();
+    tctSelectedStates.push(abbr);
+  }
+  tctFilterStates();
+  tctUpdateComparePanel();
+}
+
+function tctUpdateComparePanel() {
+  var panel = document.getElementById('comparePanel');
+  if (tctSelectedStates.length < 2) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+
+  var income = parseFloat(document.getElementById('userIncome').value) || 75000;
+  var s1 = TCT_STATES.find(function(s) { return s.abbr === tctSelectedStates[0]; });
+  var s2 = TCT_STATES.find(function(s) { return s.abbr === tctSelectedStates[1]; });
+  if (!s1 || !s2) return;
+
+  var tax1 = tctCalculateStateTax(income, s1);
+  var tax2 = tctCalculateStateTax(income, s2);
+  var diff = tax1 - tax2;
+
+  document.getElementById('state1Name').textContent = s1.name;
+  document.getElementById('state1Tax').textContent = '$' + tax1.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('state1Details').textContent = (s1.type === 'no-tax' ? 'No state income tax' : (s1.flat ? 'Flat rate: ' + (s1.rate*100).toFixed(2) + '%' : 'Progressive rates up to ' + (s1.rate*100).toFixed(1) + '%')) + (s1.note ? '. ' + s1.note : '');
+
+  document.getElementById('state2Name').textContent = s2.name;
+  document.getElementById('state2Tax').textContent = '$' + tax2.toLocaleString('en-US', {maximumFractionDigits: 0});
+  document.getElementById('state2Details').textContent = (s2.type === 'no-tax' ? 'No state income tax' : (s2.flat ? 'Flat rate: ' + (s2.rate*100).toFixed(2) + '%' : 'Progressive rates up to ' + (s2.rate*100).toFixed(1) + '%')) + (s2.note ? '. ' + s2.note : '');
+
+  var savings = document.getElementById('savingsBox');
+  if (diff > 0) {
+    savings.textContent = 'Save $' + diff.toLocaleString('en-US', {maximumFractionDigits: 0}) + '/year by moving from ' + s1.name + ' to ' + s2.name;
+    savings.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
+    savings.style.color = '#2e7d32';
+  } else if (diff < 0) {
+    savings.textContent = 'Save $' + Math.abs(diff).toLocaleString('en-US', {maximumFractionDigits: 0}) + '/year by moving from ' + s2.name + ' to ' + s1.name;
+    savings.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
+    savings.style.color = '#2e7d32';
+  } else {
+    savings.textContent = 'Same tax burden in both states';
+    savings.style.background = '#f5f5f5';
+    savings.style.color = '#666';
+  }
+
+  tctDrawCompareChart(tax1, tax2, s1.name, s2.name);
+  tctSaveToHistory({state1: s1.abbr, state2: s2.abbr, income: income, tax1: tax1, tax2: tax2, diff: diff, date: new Date().toLocaleDateString()});
+  tctSaveInputState();
+}
+
+function tctDrawCompareChart(tax1, tax2, name1, name2) {
+  var canvas = document.getElementById('tctChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = 600 * dpr; canvas.height = 250 * dpr;
+  ctx.scale(dpr, dpr);
+  var w = 600, h = 250, pad = {top: 30, bottom: 50, left: 60, right: 30};
+  ctx.clearRect(0, 0, w, h);
+
+  var maxVal = Math.max(tax1, tax2) * 1.2;
+  var barW = 100, gap = 80;
+  var data = [
+    {label: name1, value: tax1, color: '#4a90a4'},
+    {label: name2, value: tax2, color: '#c45b4a'}
+  ];
+
+  data.forEach(function(d, i) {
+    var barH = (d.value / maxVal) * (h - pad.top - pad.bottom);
+    var x = pad.left + i * (barW + gap) + 80;
+    var y = h - pad.bottom - barH;
+    ctx.fillStyle = d.color;
+    ctx.beginPath(); ctx.roundRect(x, y, barW, barH, 4); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 12px Inter'; ctx.textAlign = 'center';
+    ctx.fillText('$' + d.value.toLocaleString(), x + barW/2, y - 8);
+    ctx.fillStyle = '#5c5c5c'; ctx.font = '11px Inter';
+    ctx.fillText(d.label, x + barW/2, h - pad.bottom + 18);
+  });
+
+  ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+  ctx.fillText('State Tax Comparison', w/2, 18);
+}
+
+function tctUpdateAll() {
+  tctFilterStates();
+  tctUpdateComparePanel();
+}
+
+function tctSaveResult() {
+  var s1 = document.getElementById('state1Name').textContent;
+  var s2 = document.getElementById('state2Name').textContent;
+  var t1 = document.getElementById('state1Tax').textContent;
+  var t2 = document.getElementById('state2Tax').textContent;
+  var text = 'State Tax Comparison\n' + s1 + ': ' + t1 + '\n' + s2 + ': ' + t2 + '\nGenerated by taxcalctool.org';
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'state-comparison.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctExportResult() {
+  var history = JSON.parse(localStorage.getItem('tctStateHistory') || '[]');
+  if (history.length === 0) { alert('No data to export'); return; }
+  var csv = 'Date,State 1,State 2,Income,Tax 1,Tax 2,Diff\n';
+  history.forEach(function(h) {
+    csv += [h.date, h.state1, h.state2, h.income, h.tax1, h.tax2, h.diff].join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'state-comparison-history.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctShareResult() {
+  var s1 = document.getElementById('state1Name').textContent;
+  var s2 = document.getElementById('state2Name').textContent;
+  var text = 'Comparing ' + s1 + ' vs ' + s2 + ' state taxes at taxcalctool.org';
+  if (navigator.share) {
+    navigator.share({title: 'State Tax Comparison', text: text});
+  } else {
+    navigator.clipboard.writeText(text).then(function() { alert('Copied to clipboard!'); });
+  }
+}
+
+function tctClearSelection() {
+  tctSelectedStates = [];
+  tctFilterStates();
+  tctUpdateComparePanel();
+}
+
+function tctSaveToHistory(record) {
+  var history = JSON.parse(localStorage.getItem('tctStateHistory') || '[]');
+  history.unshift(record);
+  if (history.length > 10) history.pop();
+  localStorage.setItem('tctStateHistory', JSON.stringify(history));
+  tctRenderHistory();
+}
+
+function tctRenderHistory() {
+  var history = JSON.parse(localStorage.getItem('tctStateHistory') || '[]');
+  var el = document.getElementById('historyList');
+  if (history.length === 0) {
+    el.innerHTML = '<p style="color:var(--tct-text-light);">No saved comparisons yet.</p>';
+    return;
+  }
+  var html = '';
+  history.forEach(function(h, i) {
+    var s1 = TCT_STATES.find(function(s) { return s.abbr === h.state1; });
+    var s2 = TCT_STATES.find(function(s) { return s.abbr === h.state2; });
+    html += '<div class="tct-history-item" onclick="tctLoadHistory(' + i + ')">';
+    html += (s1 ? s1.name : h.state1) + ' vs ' + (s2 ? s2.name : h.state2) + ' — $' + h.income.toLocaleString() + ' income — ' + h.date + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function tctLoadHistory(index) {
+  var history = JSON.parse(localStorage.getItem('tctStateHistory') || '[]');
+  var h = history[index];
+  if (!h) return;
+  document.getElementById('userIncome').value = h.income;
+  tctSelectedStates = [h.state1, h.state2];
+  tctFilterStates();
+  tctUpdateComparePanel();
+}
+
+function tctClearHistory() {
+  localStorage.removeItem('tctStateHistory');
+  tctRenderHistory();
+}
+
+function tctSaveInputState() {
+  var state = {
+    userIncome: document.getElementById('userIncome').value,
+    filterType: document.getElementById('filterType').value,
+    searchInput: document.getElementById('searchInput').value,
+    selectedStates: tctSelectedStates
+  };
+  localStorage.setItem('tctStateInput', JSON.stringify(state));
+}
+
+function tctLoadInputState() {
+  var state = JSON.parse(localStorage.getItem('tctStateInput') || '{}');
+  if (state.userIncome) document.getElementById('userIncome').value = state.userIncome;
+  if (state.filterType) document.getElementById('filterType').value = state.filterType;
+  if (state.searchInput) document.getElementById('searchInput').value = state.searchInput;
+  if (state.selectedStates) tctSelectedStates = state.selectedStates;
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  tctLoadInputState();
+  tctFilterStates();
+  tctUpdateComparePanel();
+  tctRenderHistory();
+});
+</script>
+
+
+<script>
+// Load related articles
+fetch('../articles.json')
+  .then(r => r.json())
+  .then(articles => {
+    const currentCategory = 'STATE-TAX';
+    let related = articles.filter(a => a.category === currentCategory);
+    if (related.length < 3) {
+      const tagMatches = articles.filter(a => !related.includes(a) && a.tags && a.tags.some(t => ['state-tax', 'tax', 'federal'].includes(t)));
+      related = related.concat(tagMatches);
+    }
+    while (related.length < 3) {
+      const random = articles[Math.floor(Math.random() * articles.length)];
+      if (!related.includes(random)) related.push(random);
+    }
+    const container = document.getElementById('related-articles');
+    if (container) {
+      container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">' +
+        related.slice(0, 3).map(a =>
+          '<a href="../blog/' + a.slug + '.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;">' +
+          '<div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">' + (a.category || 'ARTICLE') + '</div>' +
+          '<strong>' + a.title + '</strong>' +
+          '<p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.5rem;">' + (a.excerpt ? a.excerpt.substring(0,80) : '') + '...</p></a>'
+        ).join('') +
+        '</div>';
+    }
+  })
+  .catch(() => {
+    const container = document.getElementById('related-articles');
+    if (container) container.innerHTML = '<p style="color:var(--tct-text-light);">Related articles loading...</p>';
+  });
+
+// Tool recommendations
+var toolCategory = 'STATE-TAX';
+var toolMap = {
+  'DEDUCTIONS': [
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'See how deductions affect your total tax.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Estimate your refund after deductions.']
+  ],
+  'FEDERAL': [
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Estimate your federal tax with 2026 OBBBA brackets.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Will you owe or get a refund? Find out before filing.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.']
+  ],
+  'SELF-EMPLOYMENT': [
+    ['../tools/self-employment-tax.html', '&#128188;', 'Self-Employment Tax Calculator', 'See exactly how much SE tax you will owe.'],
+    ['../tools/quarterly-tax.html', '&#128197;', 'Quarterly Tax Estimator', 'Calculate your estimated quarterly payments for 2026.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Full picture: income + SE tax combined.']
+  ],
+  'STATE-TAX': [
+    ['../tools/state-tax-comparison.html', '&#127758;', 'State Tax Comparison', 'Compare state income tax across all 50 states.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Federal + state combined tax picture.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'How state tax affects your deduction strategy.']
+  ]
+};
+var tools = toolMap[toolCategory] || toolMap['FEDERAL'];
+var toolHtml = '';
+for (var i = 0; i < tools.length; i++) {
+  var t = tools[i];
+  toolHtml += '<a href="' + t[0] + '" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);margin-bottom:0.75rem;">' +
+    '<div style="font-size:1.5rem;margin-bottom:0.5rem;">' + t[1] + '</div><strong>' + t[2] + '</strong><p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.25rem;">' + t[3] + '</p></a>';
+}
+var toolContainer = document.getElementById('other-tools');
+if (toolContainer) toolContainer.innerHTML = toolHtml;
+</script>
+tctLoadAds();
+</body>
+</html>
