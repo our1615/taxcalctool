@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard vs Itemized Deduction Comparison 2026 - Tax Calc Tool</title>
+<meta name="description" content="Compare standard deduction vs itemized deductions for 2026. Find the best option to minimize your tax liability.">
+<link rel="canonical" href="https://taxcalctool.org/tools/deduction-comparison.html">
+<meta property="og:title" content="Standard vs Itemized Deduction Comparison 2026 - Tax Calc Tool">
+<meta property="og:description" content="Compare standard deduction vs itemized deductions for 2026. Find the best option to minimize your tax liability.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://taxcalctool.org/tools/deduction-comparison.html">
+<meta property="og:image" content="https://taxcalctool.org/og-image.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Standard vs Itemized Deduction Comparison 2026",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "description": "Compare standard deduction vs itemized deductions to find the best tax option"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://taxcalctool.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://taxcalctool.org/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Standard vs Itemized Deduction Comparison",
+      "item": "https://taxcalctool.org/tools/deduction-comparison.html"
+    }
+  ]
+}
+</script>
+<style>
+.tct-accordion-compare { max-width: 900px; margin: 0 auto; }
+.tct-compare-panel { background: var(--tct-card-bg); border-radius: 12px; padding: 2rem; box-shadow: var(--tct-shadow); margin-bottom: 1.5rem; }
+.tct-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; }
+.tct-compare-box { padding: 1.5rem; border-radius: 8px; text-align: center; }
+.tct-compare-standard { background: linear-gradient(135deg, #f0ecf5, #e8e0f0); border: 2px solid var(--tct-primary-light); }
+.tct-compare-itemized { background: linear-gradient(135deg, #fff5f5, #ffe8e8); border: 2px solid var(--tct-accent); }
+.tct-compare-amount { font-size: 2rem; font-weight: 700; font-family: 'Playfair Display', serif; margin: 0.5rem 0; }
+.tct-compare-winner { background: linear-gradient(135deg, var(--tct-primary), var(--tct-primary-light)); color: white; padding: 1rem; border-radius: 8px; text-align: center; margin-top: 1rem; }
+.tct-deduction-input { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #eee; }
+.tct-deduction-input label { font-weight: 500; }
+.tct-deduction-input input { width: 150px; text-align: right; }
+#tctChart { width: 100%; height: 300px; margin-top: 1.5rem; }
+.tct-history-item { padding: 0.75rem; border-bottom: 1px solid var(--tct-border); font-size: 0.9rem; cursor: pointer; }
+.tct-history-item:hover { background: #f8f8f8; }
+@media (max-width: 768px) { .tct-compare-grid { grid-template-columns: 1fr; } }
+</style>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Standard vs Itemized Deduction Comparison - Tax Calc Tool">
+<meta name="twitter:description" content="Compare standard deduction vs itemized deductions for 2026. Find the best option to minimize your tax liability.">
+</head>
+<body>
+<header class="tct-header">
+  <div class="tct-header-inner">
+    <a href="../index.html" class="tct-logo">Tax<span>Calc</span>Tool</a>
+    <button class="tct-mobile-menu-btn" onclick="tctToggleMenu()">&#9776;</button>
+    <nav><ul class="tct-nav" id="mainNav">
+      <li><a href="./index.html">Tools</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../faq.html">FAQ</a></li><li><a href="../contact.html">Contact</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<div class="tct-container">
+  <nav class="tct-breadcrumb"><a href="../index.html">Home</a> / <a href="./index.html">Tools</a> / Standard vs Itemized Deduction</nav>
+
+  <div id="tool_top" data-ad-slot="tool_top" class="tct-ad-slot"></div>
+
+  <section class="tct-section">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;text-align:center;">Standard vs Itemized Deduction</h1>
+    <p style="color:var(--tct-text-light);margin-bottom:2rem;text-align:center;">Compare standard deduction vs itemized deductions for 2026. See which saves you more.</p>
+
+    <div class="tct-accordion-compare">
+      <div class="tct-compare-panel">
+        <h3 style="margin-bottom:1.5rem;">Your Deductions</h3>
+        <div class="tct-form-group">
+          <label class="tct-label">Filing Status</label>
+          <select id="filingStatus" class="tct-select">
+            <option value="single">Single</option>
+            <option value="married">Married Filing Jointly</option>
+            <option value="head">Head of Household</option>
+          </select>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <h4 style="margin-bottom:1rem;color:var(--tct-primary);">Itemized Deductions</h4>
+          <div class="tct-deduction-input"><label>Medical & Dental (exceeding 7.5% AGI)</label><input type="number" id="medical" class="tct-input" placeholder="0" min="0" value="0"></div>
+          <div class="tct-deduction-input"><label>State & Local Taxes (SALT, max $10k)</label><input type="number" id="salt" class="tct-input" placeholder="0" min="0" value="0"></div>
+          <div class="tct-deduction-input"><label>Home Mortgage Interest</label><input type="number" id="mortgage" class="tct-input" placeholder="0" min="0" value="0"></div>
+          <div class="tct-deduction-input"><label>Charitable Contributions</label><input type="number" id="charity" class="tct-input" placeholder="0" min="0" value="0"></div>
+          <div class="tct-deduction-input"><label>Casualty & Theft Losses</label><input type="number" id="casualty" class="tct-input" placeholder="0" min="0" value="0"></div>
+          <div class="tct-deduction-input"><label>Other Itemized Deductions</label><input type="number" id="other" class="tct-input" placeholder="0" min="0" value="0"></div>
+        </div>
+        <button class="tct-btn" onclick="tctCompareDeductions()" style="width:100%;margin-top:1.5rem;padding:1rem;">Compare Deductions</button>
+      </div>
+
+      <div id="resultPanel" class="tct-compare-panel" style="display:none;">
+        <h3 style="text-align:center;margin-bottom:1.5rem;">Comparison Result</h3>
+        <div class="tct-compare-grid">
+          <div class="tct-compare-box tct-compare-standard">
+            <div style="font-size:0.9rem;color:var(--tct-text-light);margin-bottom:0.5rem;">Standard Deduction</div>
+            <div class="tct-compare-amount" id="standardAmount" style="color:var(--tct-primary);">$16,100</div>
+            <div style="font-size:0.85rem;color:var(--tct-text-light);">No records needed</div>
+          </div>
+          <div class="tct-compare-box tct-compare-itemized">
+            <div style="font-size:0.9rem;color:var(--tct-text-light);margin-bottom:0.5rem;">Itemized Deductions</div>
+            <div class="tct-compare-amount" id="itemizedAmount" style="color:var(--tct-accent);">$0</div>
+            <div style="font-size:0.85rem;color:var(--tct-text-light);">Requires documentation</div>
+          </div>
+        </div>
+        <div id="winnerBox" class="tct-compare-winner"></div>
+        <div id="savingsBox" style="text-align:center;margin-top:1rem;color:var(--tct-text-light);"></div>
+        <canvas id="tctChart"></canvas>
+
+        <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap;">
+          <button class="tct-btn" onclick="tctSaveResult()">Save</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctExportResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Export</button>
+          <button class="tct-btn tct-btn-secondary" onclick="tctShareResult()" style="border-color:var(--tct-primary);color:var(--tct-primary);">Share</button>
+        </div>
+      </div>
+
+      <div class="tct-compare-panel">
+        <h3 style="margin-bottom:1rem;">How It Works</h3>
+        <div class="tct-accordion-item active">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">1. What This Calculator Does</div>
+          <div class="tct-accordion-body" style="display:block;">
+            <p>Compares your total itemized deductions against the 2026 standard deduction for your filing status. Shows which option reduces your taxable income more, and calculates the tax savings difference.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">2. When to Use It</div>
+          <div class="tct-accordion-body">
+            <p>Use this in Q4 before year-end when deciding whether to bunch charitable donations, pay property taxes early, or make additional medical appointments. Also useful when buying a home (mortgage interest often pushes you over standard deduction).</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">3. Calculation Method</div>
+          <div class="tct-accordion-body">
+            <p>Standard deduction is fixed by filing status: $16,100 (single), $32,200 (married), $24,150 (head). Itemized = medical (over 7.5% AGI) + SALT (capped at $10k) + mortgage interest + charity + casualty + other. Winner = larger amount. Tax savings = difference × marginal tax rate.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">4. Understanding Results</div>
+          <div class="tct-accordion-body">
+            <p>If itemized wins by $5,000 and you're in the 22% bracket, you save $1,100 in federal tax. But itemizing requires receipts, Form 1098, donation letters, and more audit risk. Standard deduction is simpler and often nearly as good since TCJA nearly doubled it.</p>
+          </div>
+        </div>
+        <div class="tct-accordion-item">
+          <div class="tct-accordion-header" onclick="this.parentElement.classList.toggle('active')">5. Disclaimer</div>
+          <div class="tct-accordion-body">
+            <p>This comparison uses simplified assumptions. Actual itemized deductions may be limited by AMT, phase-outs, or specific rules (e.g., charity limits at 60% AGI, medical at 7.5% AGI floor). Consult a tax professional for complex situations.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool_middle" data-ad-slot="tool_middle" class="tct-ad-slot"></div>
+
+      <div class="tct-compare-panel">
+        <h3 style="margin-bottom:1rem;">Saved Comparisons</h3>
+        <div id="historyList"><p style="color:var(--tct-text-light);">No saved comparisons yet.</p></div>
+        <button class="tct-btn" onclick="tctClearHistory()" style="margin-top:1rem;">Clear History</button>
+      </div>
+
+      <div class="tct-compare-panel">
+        <h3 style="margin-bottom:1rem;">Related Articles</h3>
+        <div id="related-articles"></div>
+      </div>
+
+      <div class="tct-compare-panel">
+        <h3 style="margin-bottom:1rem;">Other Tax Tools</h3>
+        <div id="other-tools"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+</div>
+
+
+<div id="tool_bottom" data-ad-slot="tool_bottom" class="tct-ad-slot"></div>
+
+<div style="margin:2rem 0;">
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h3 style="margin-bottom:1rem;">Related Articles</h3>
+      <div id="related-articles"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+<a href="../blog/index.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;"><div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">ARTICLE</div><strong>Related articles loading...</strong></a>
+</div></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:1rem;">Recommended Tools</h3>
+      <div id="other-tools"></div>
+    </div>
+  </div>
+</div>
+<footer class="tct-footer">
+  <div class="tct-container">
+    <div class="tct-footer-grid">
+      <div><h4>Tools</h4><a href="./federal-tax-estimator.html">Federal Tax Estimator</a><a href="./self-employment-tax.html">Self-Employment Tax</a><a href="./refund-predictor.html">Refund Predictor</a><a href="./deduction-comparison.html">Deduction Comparison</a><a href="./quarterly-tax.html">Quarterly Tax</a><a href="./state-tax-comparison.html">State Tax Comparison</a></div>
+      <div><h4>Blog & Resources</h4><a href="../blog/index.html">All Articles</a><a href="../faq.html">FAQ</a><a href="../sitemap.html">Sitemap</a></div>
+      <div><h4>Legal</h4><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Use</a><a href="../disclaimer.html">Disclaimer</a><a href="../disclosure.html">Ad Disclosure</a></div>
+      <div><h4>About</h4><a href="../about.html">About Us</a><a href="../contact.html">Contact</a><p style="margin-top:1rem;font-size:0.85rem;">Not financial or tax advice. For educational purposes only.</p></div>
+    </div>
+    <div class="tct-footer-bottom"><p>Tax Calc Tool. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<div class="tct-sticky-bar">Your data stays on your device. No information is stored on our servers.</div>
+
+<script src="../ads-loader.js"></script>
+
+<script>
+const TCT_STANDARD_DEDUCTION = {single: 16100, married: 32200, head: 24150};
+
+function tctToggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+function tctCompareDeductions() {
+  var status = document.getElementById('filingStatus').value;
+  var medical = parseFloat(document.getElementById('medical').value) || 0;
+  var salt = Math.min(parseFloat(document.getElementById('salt').value) || 0, 10000);
+  var mortgage = parseFloat(document.getElementById('mortgage').value) || 0;
+  var charity = parseFloat(document.getElementById('charity').value) || 0;
+  var casualty = parseFloat(document.getElementById('casualty').value) || 0;
+  var other = parseFloat(document.getElementById('other').value) || 0;
+
+  var standard = TCT_STANDARD_DEDUCTION[status];
+  var itemized = medical + salt + mortgage + charity + casualty + other;
+  var winner = itemized > standard ? 'itemized' : 'standard';
+  var diff = Math.abs(itemized - standard);
+  var savings = diff * 0.22; // Assume 22% marginal rate for display
+
+  document.getElementById('standardAmount').textContent = '$' + standard.toLocaleString('en-US');
+  document.getElementById('itemizedAmount').textContent = '$' + itemized.toLocaleString('en-US');
+
+  var winnerBox = document.getElementById('winnerBox');
+  if (winner === 'itemized') {
+    winnerBox.innerHTML = '<strong>Itemized Deductions Win</strong><br>By $' + diff.toLocaleString('en-US') + ' more than standard';
+    winnerBox.style.background = 'linear-gradient(135deg, var(--tct-accent), #e8a0a0)';
+  } else {
+    winnerBox.innerHTML = '<strong>Standard Deduction Wins</strong><br>By $' + diff.toLocaleString('en-US') + ' more than itemized';
+    winnerBox.style.background = 'linear-gradient(135deg, var(--tct-primary), var(--tct-primary-light))';
+  }
+
+  document.getElementById('savingsBox').innerHTML = 'Estimated tax savings with winning option: <strong>$' + savings.toLocaleString('en-US', {maximumFractionDigits: 0}) + '</strong> (at 22% marginal rate)';
+  document.getElementById('resultPanel').style.display = 'block';
+
+  tctDrawDeductionChart(standard, itemized, medical, salt, mortgage, charity, casualty, other);
+  tctSaveToHistory({status: status, standard: standard, itemized: itemized, medical: medical, salt: salt, mortgage: mortgage, charity: charity, casualty: casualty, other: other, winner: winner, diff: diff, date: new Date().toLocaleDateString()});
+  tctSaveInputState();
+}
+
+function tctDrawDeductionChart(standard, itemized, medical, salt, mortgage, charity, casualty, other) {
+  var canvas = document.getElementById('tctChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = 600 * dpr; canvas.height = 300 * dpr;
+  ctx.scale(dpr, dpr);
+  var w = 600, h = 300, pad = {top: 30, bottom: 50, left: 120, right: 30};
+  ctx.clearRect(0, 0, w, h);
+
+  var data = [
+    {label: 'Standard Deduction', value: standard, color: '#4a90a4'},
+    {label: 'Medical', value: medical, color: '#5ba3b8'},
+    {label: 'SALT', value: salt, color: '#e8913a'},
+    {label: 'Mortgage', value: mortgage, color: '#c45b4a'},
+    {label: 'Charity', value: charity, color: '#8b5a7c'},
+    {label: 'Casualty', value: casualty, color: '#2d4a3e'},
+    {label: 'Other', value: other, color: '#666666'}
+  ];
+
+  var maxVal = Math.max(standard, itemized) * 1.1;
+  var barH = 22, gap = 6;
+
+  data.forEach(function(d, i) {
+    var barW = (d.value / maxVal) * (w - pad.left - pad.right);
+    var y = pad.top + i * (barH + gap);
+    ctx.fillStyle = d.color;
+    ctx.beginPath(); ctx.roundRect(pad.left, y, barW, barH, 4); ctx.fill();
+    ctx.fillStyle = '#1a1a1a'; ctx.font = '12px Inter'; ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left - 10, y + 15);
+    ctx.fillStyle = '#5c5c5c'; ctx.font = '11px Inter'; ctx.textAlign = 'left';
+    ctx.fillText('$' + d.value.toLocaleString(), pad.left + barW + 8, y + 15);
+  });
+
+  ctx.fillStyle = '#1a1a1a'; ctx.font = 'bold 13px Inter'; ctx.textAlign = 'center';
+  ctx.fillText('Standard vs Itemized Deduction Breakdown', w/2, 18);
+}
+
+function tctSaveResult() {
+  var standard = document.getElementById('standardAmount').textContent;
+  var itemized = document.getElementById('itemizedAmount').textContent;
+  var winner = document.getElementById('winnerBox').textContent;
+  var text = 'Deduction Comparison\nStandard: ' + standard + '\nItemized: ' + itemized + '\n' + winner + '\nGenerated by taxcalctool.org';
+  var blob = new Blob([text], {type: 'text/plain'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'deduction-comparison.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctExportResult() {
+  var history = JSON.parse(localStorage.getItem('tctDeductionHistory') || '[]');
+  if (history.length === 0) { alert('No data to export'); return; }
+  var csv = 'Date,Filing Status,Standard,Itemized,Medical,SALT,Mortgage,Charity,Casualty,Other,Winner,Diff\n';
+  history.forEach(function(h) {
+    csv += [h.date, h.status, h.standard, h.itemized, h.medical, h.salt, h.mortgage, h.charity, h.casualty, h.other, h.winner, h.diff].join(',') + '\n';
+  });
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'deduction-history.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function tctShareResult() {
+  var winner = document.getElementById('winnerBox').textContent;
+  var text = 'My deduction comparison: ' + winner + '. Compare yours at taxcalctool.org';
+  if (navigator.share) {
+    navigator.share({title: 'Deduction Comparison', text: text});
+  } else {
+    navigator.clipboard.writeText(text).then(function() { alert('Copied to clipboard!'); });
+  }
+}
+
+function tctSaveToHistory(record) {
+  var history = JSON.parse(localStorage.getItem('tctDeductionHistory') || '[]');
+  history.unshift(record);
+  if (history.length > 10) history.pop();
+  localStorage.setItem('tctDeductionHistory', JSON.stringify(history));
+  tctRenderHistory();
+}
+
+function tctRenderHistory() {
+  var history = JSON.parse(localStorage.getItem('tctDeductionHistory') || '[]');
+  var el = document.getElementById('historyList');
+  if (history.length === 0) {
+    el.innerHTML = '<p style="color:var(--tct-text-light);">No saved comparisons yet.</p>';
+    return;
+  }
+  var html = '';
+  history.forEach(function(h, i) {
+    var label = h.winner === 'itemized' ? 'Itemized' : 'Standard';
+    var color = h.winner === 'itemized' ? 'var(--tct-accent)' : 'var(--tct-primary)';
+    html += '<div class="tct-history-item" onclick="tctLoadHistory(' + i + ')">';
+    html += '<span style="color:' + color + '">' + label + '</span> wins by $' + h.diff.toLocaleString() + ' — ' + h.date + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function tctLoadHistory(index) {
+  var history = JSON.parse(localStorage.getItem('tctDeductionHistory') || '[]');
+  var h = history[index];
+  if (!h) return;
+  document.getElementById('filingStatus').value = h.status;
+  document.getElementById('medical').value = h.medical;
+  document.getElementById('salt').value = h.salt;
+  document.getElementById('mortgage').value = h.mortgage;
+  document.getElementById('charity').value = h.charity;
+  document.getElementById('casualty').value = h.casualty;
+  document.getElementById('other').value = h.other;
+  tctCompareDeductions();
+}
+
+function tctClearHistory() {
+  localStorage.removeItem('tctDeductionHistory');
+  tctRenderHistory();
+}
+
+function tctSaveInputState() {
+  var state = {
+    filingStatus: document.getElementById('filingStatus').value,
+    medical: document.getElementById('medical').value,
+    salt: document.getElementById('salt').value,
+    mortgage: document.getElementById('mortgage').value,
+    charity: document.getElementById('charity').value,
+    casualty: document.getElementById('casualty').value,
+    other: document.getElementById('other').value
+  };
+  localStorage.setItem('tctDeductionInput', JSON.stringify(state));
+}
+
+function tctLoadInputState() {
+  var state = JSON.parse(localStorage.getItem('tctDeductionInput') || '{}');
+  if (state.filingStatus) document.getElementById('filingStatus').value = state.filingStatus;
+  if (state.medical) document.getElementById('medical').value = state.medical;
+  if (state.salt) document.getElementById('salt').value = state.salt;
+  if (state.mortgage) document.getElementById('mortgage').value = state.mortgage;
+  if (state.charity) document.getElementById('charity').value = state.charity;
+  if (state.casualty) document.getElementById('casualty').value = state.casualty;
+  if (state.other) document.getElementById('other').value = state.other;
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  tctLoadInputState();
+  tctRenderHistory();
+});
+</script>
+
+
+<script>
+// Load related articles
+fetch('../articles.json')
+  .then(r => r.json())
+  .then(articles => {
+    const currentCategory = 'DEDUCTIONS';
+    let related = articles.filter(a => a.category === currentCategory);
+    if (related.length < 3) {
+      const tagMatches = articles.filter(a => !related.includes(a) && a.tags && a.tags.some(t => ['deductions', 'tax', 'federal'].includes(t)));
+      related = related.concat(tagMatches);
+    }
+    while (related.length < 3) {
+      const random = articles[Math.floor(Math.random() * articles.length)];
+      if (!related.includes(random)) related.push(random);
+    }
+    const container = document.getElementById('related-articles');
+    if (container) {
+      container.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">' +
+        related.slice(0, 3).map(a =>
+          '<a href="../blog/' + a.slug + '.html" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);transition:transform 0.2s;">' +
+          '<div style="font-size:0.85rem;color:var(--tct-primary);margin-bottom:0.5rem;">' + (a.category || 'ARTICLE') + '</div>' +
+          '<strong>' + a.title + '</strong>' +
+          '<p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.5rem;">' + (a.excerpt ? a.excerpt.substring(0,80) : '') + '...</p></a>'
+        ).join('') +
+        '</div>';
+    }
+  })
+  .catch(() => {
+    const container = document.getElementById('related-articles');
+    if (container) container.innerHTML = '<p style="color:var(--tct-text-light);">Related articles loading...</p>';
+  });
+
+// Tool recommendations
+var toolCategory = 'DEDUCTIONS';
+var toolMap = {
+  'DEDUCTIONS': [
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'See how deductions affect your total tax.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Estimate your refund after deductions.']
+  ],
+  'FEDERAL': [
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Estimate your federal tax with 2026 OBBBA brackets.'],
+    ['../tools/refund-predictor.html', '&#128260;', 'Refund Predictor', 'Will you owe or get a refund? Find out before filing.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'Compare standard vs itemized deductions.']
+  ],
+  'SELF-EMPLOYMENT': [
+    ['../tools/self-employment-tax.html', '&#128188;', 'Self-Employment Tax Calculator', 'See exactly how much SE tax you will owe.'],
+    ['../tools/quarterly-tax.html', '&#128197;', 'Quarterly Tax Estimator', 'Calculate your estimated quarterly payments for 2026.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Full picture: income + SE tax combined.']
+  ],
+  'STATE-TAX': [
+    ['../tools/state-tax-comparison.html', '&#127758;', 'State Tax Comparison', 'Compare state income tax across all 50 states.'],
+    ['../tools/federal-tax-estimator.html', '&#128202;', 'Federal Tax Estimator', 'Federal + state combined tax picture.'],
+    ['../tools/deduction-comparison.html', '&#128221;', 'Deduction Comparison', 'How state tax affects your deduction strategy.']
+  ]
+};
+var tools = toolMap[toolCategory] || toolMap['FEDERAL'];
+var toolHtml = '';
+for (var i = 0; i < tools.length; i++) {
+  var t = tools[i];
+  toolHtml += '<a href="' + t[0] + '" style="background:var(--tct-card-bg);padding:1rem;border-radius:8px;text-decoration:none;color:inherit;display:block;box-shadow:var(--tct-shadow);margin-bottom:0.75rem;">' +
+    '<div style="font-size:1.5rem;margin-bottom:0.5rem;">' + t[1] + '</div><strong>' + t[2] + '</strong><p style="font-size:0.85rem;color:var(--tct-text-light);margin-top:0.25rem;">' + t[3] + '</p></a>';
+}
+var toolContainer = document.getElementById('other-tools');
+if (toolContainer) toolContainer.innerHTML = toolHtml;
+</script>
+tctLoadAds();
+</body>
+</html>
