@@ -1,0 +1,72 @@
+# taxcalctool
+
+Free online calculators and educational content. Not professional advice.
+
+## Pages
+- Home: https://taxcalctool.org/
+- Tools: https://taxcalctool.org/tools/
+- Blog: https://taxcalctool.org/blog/
+- About: https://taxcalctool.org/about.html
+- Contact: https://taxcalctool.org/contact.html
+- FAQ: https://taxcalctool.org/faq.html
+- Sitemap: https://taxcalctool.org/sitemap.html
+
+## Tools
+- Standard vs Itemized Deduction Comparison 2026 - Tax Calc Tool: https://taxcalctool.org/tools/deduction-comparison.html
+- Federal Income Tax Estimator 2026 - Tax Calc Tool: https://taxcalctool.org/tools/federal-tax-estimator.html
+- Quarterly Tax Payment Calculator 2026 - Tax Calc Tool: https://taxcalctool.org/tools/quarterly-tax.html
+- Refund or Owed Tax Predictor 2026 - Tax Calc Tool: https://taxcalctool.org/tools/refund-predictor.html
+- Self-Employment Tax Calculator 2026 - Tax Calc Tool: https://taxcalctool.org/tools/self-employment-tax.html
+- State Tax Comparison Tool 2026 - Tax Calc Tool: https://taxcalctool.org/tools/state-tax-comparison.html
+
+## Articles
+- Tipped Workers 25000 Deduction 2026 (tipped-workers-25000-deduction-2026) -- My bartender friend Dave texted me last Thursday at 11 PM. "Dude, I heard tipped workers can deduct $25,000 now. Is this real or did my regular lie to me?" Dave's regular is a guy who wears a tinfoil -- July 23, 2026
+- The Irs Letter That Made Me Realize I Had Been Doing My Taxes Wrong For Years (the-irs-letter-that-made-me-realize-i-had-been-doing-my-taxes-wrong-for-years) -- The IRS Letter That Made Me Realize I Had Been Doing My Taxes Wrong for Years I opened the envelope on a Saturday morning in February. The return address said "Department of the Treasury — Internal Re -- July 10, 2026
+- Owe How Much Turbotax Moment Real Accountant (owe-how-much-turbotax-moment-real-accountant) -- The number on the screen was red. Not a gentle pink. Not a warning orange. A violent, screaming red that said I owed the IRS $4,200. I stared at it for a full minute, convinced I had entered something -- July 06, 2026
+- Phoenix Heat Tax Credits Energy (phoenix-heat-tax-credits-energy) -- Why My Tax Calculator Missed $1,200 in Energy Credits—And the IRS Didn't Care James Whitfield I was doing my taxes in April, using the online tax calculator that came with my filing software, when I n -- July 06, 2026
+- I Owe The Irs 4200 (i-owe-the-irs-4200) -- I Owe the IRS $4,200 Because I Trusted TurboTax's 'Maximum Refund' Promise I made a mistake. I need to say that first, because what follows involves a CPA, a tax software commercial, and a level of em -- June 24, 2026
+- Tax Loss Harvesting: A Practical Guide for 2026 - Tax Calc Tool (tax-loss-harvesting-guide) -- Tax Loss Harvesting: A Practical Guide for 2026
+
+My phone buzzed during dinner last November. Jennifer gave me that look—the one that says -- May 10, 2026
+- HSA Triple Tax Advantage: The Most Underrated Tax Tool - Tax Calc Tool (health-savings-account-tax) -- HSA Triple Tax Advantage: The Most Underrated Tax Tool
+
+I was reviewing a client's tax return last month when I noticed something odd. $7,300 deductio... -- May 01, 2026
+- S-Corp vs Sole Proprietor: Which Saves More Tax in 2026? - Tax Calc Tool (s-corp-vs-sole-proprietor) -- S-Corp vs Sole Proprietor: Which Saves More Tax in 2026?
+
+I was at a barbecue joint on South Lamar last month—one of those places where the brisket fa... -- April 22, 2026
+- Estimated Tax Safe Harbor: The 90% vs 100% vs 110% Rule - Tax Calc Tool (estimated-tax-safe-harbor) -- Estimated Tax Safe Harbor: The 90% vs 100% vs 110% Rule
+
+A client walked into my Austin office last March looking like he had not slept in weeks. Dark... -- April 15, 2026
+- Child Tax Credit 2026: What Changed and What Didn't - Tax Calc Tool (child-tax-credit-2026) -- Child Tax Credit 2026: What Changed and What Didn't
+
+Olivia came home from school last month waving a paper. -- April 08, 2026
+- IRS Audit Red Flags: What I Looked for as a Revenue Agent - Tax Calc Tool (irs-audit-red-flags) -- IRS Audit Red Flags: What I Looked for as a Revenue Agent
+
+I spent twelve years wearing an IRS badge. Not the scary kind you see in movies—just a gove... -- April 01, 2026
+- 2026 Retirement Contribution Limits: 401k, IRA, and SEP - Tax Calc Tool (retirement-contribution-limits) -- 2026 Retirement Contribution Limits: 401k, IRA, and SEP
+
+Jennifer and I sat down for our annual -- March 22, 2026
+- Standard vs Itemized: Why Most People Shouldn't Itemize Anymore - Tax Calc Tool (standard-vs-itemized-2026) -- Standard vs Itemized: Why Most People Should Not Itemize Anymore
+
+My mother-in-law called me last week. She itemizes. Has itemized for forty years. -- March 15, 2026
+- Quarterly Tax Deadlines 2026: Don't Miss June 15 - Tax Calc Tool (quarterly-tax-deadlines) -- Quarterly Tax Deadlines 2026: Do Not Miss June 15
+
+I was driving Olivia to soccer practice last Tuesday when my phone buzzed. A client text: -- March 08, 2026
+- QBI Deduction is Now Permanent: How to Maximize Your 20% - Tax Calc Tool (qbi-deduction-explained) -- QBI Deduction is Now Permanent: How to Maximize Your 20%
+
+I was at the Austin CPA Society dinner last month when the news broke. Someone checked their... -- March 01, 2026
+- I Moved from California to Texas: A Real Tax Comparison - Tax Calc Tool (moving-states-tax-impact) -- I Moved from California to Texas: A Real Tax Comparison
+
+The U-Haul truck pulled into our Austin driveway on August 14, 2019. Jennifer was eight month... -- February 18, 2026
+- Crypto Tax Reporting in 2026: What the IRS Now Requires - Tax Calc Tool (crypto-tax-reporting-2026) -- Crypto Tax Reporting in 2026: What the IRS Now Requires
+
+My phone rang at 6:47 PM last Thursday. I almost did not answer—Jennifer had just put dinner ... -- February 10, 2026
+- Home Office Deduction: Simplified vs Actual Method in 2026 - Tax Calc Tool (home-office-deduction-guide) -- Home Office Deduction: Simplified vs Actual Method in 2026
+
+Jennifer walked into my office last month holding a stack of papers. -- February 03, 2026
+- The 7 Tax Mistakes Every Freelancer Makes (I Audited Hundreds of Them) - Tax Calc Tool (freelancer-tax-mistakes) -- The 7 Tax Mistakes Every Freelancer Makes (I Audited Hundreds of Them)
+
+Three years ago, I audited a freelance graphic designer in Dallas. Nice guy. C... -- January 22, 2026
+- What the OBBBA Actually Changed for Your 2026 Taxes - Tax Calc Tool (2026-tax-season-changes-obbba) -- What the OBBBA Actually Changed for Your 2026 Taxes
+
+I was sitting in my home office last Tuesday, Cooper snoring at my feet, when a client emailed me... -- January 15, 2026
